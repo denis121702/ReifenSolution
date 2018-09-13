@@ -1,7 +1,247 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-
+html,
 body {
   margin: 0;
+  height: 100vh;
+  font-family: Roboto, sans-serif;
+  color: #636363;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: #636363;
+}
+
+app-root {
+  height: 100vh;
+}
+
+.app-content {
+// display: flex;
+// align-items: flex-start;
+  height: 100%;
+}
+
+.content-container {
+  padding: 12px;
+}
+
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.mat-dialog-container{
+  box-sizing:content-box !important;
+}
+.mat-sidenav-container {
+  height: calc(100% - 48px);
+  background-color: #fff !important;
+  color: #636363 !important;
+}
+
+.mat-sidenav {
+  width: 240px;
+}
+
+.sidenav h2 {
+  margin: 0px;
+}
+
+.main-menu {
+  padding-top: 0px !important;
+}
+.menu-header {
+  color: #636363;
+  background-color: #ececec;
+  height: 22px !important;
+  padding: 6px 16px !important;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: normal;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.menu-header {
+  margin-bottom: 12px;
+}
+
+.menu-item {
+  text-decoration: none;
+  color: #636363;
+  display: inline-flex;
+  width: 100%;
+  height: 32px;
+}
+
+.menu-item > .mat-list-item-content {
+  height: 32px !important;
+  color: #636363;
+}
+
+.menu-item-label {
+  padding-top: 4px;
+  padding-left: 12px;
+}
+
+.menu-icon {
+  margin-top: 4px;
+  margin-left: 4px;
+}
+
+.menu-category {
+  margin-bottom: 12px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.brand-icon {
+  height: 32px;
+  margin-right: 12px;
+  margin-top: 8px;
+}
+
+.top-bar {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.mat-toolbar {
+  position: relative;
+  min-height: 48px !important;
+  height: 48px;
+  z-index: 10;
+  background-color: white;
+  margin-top: 18px;
+  margin-bottom: 12px;
+  padding: 0px;
+  color: #636363;
+}
+
+.mat-toolbar-row {
+  height: 48px !important;
+}
+
+.mat-card-header-text {
+  margin: 0 !important;
+}
+
+.mat-card-title > h2 {
+  margin-top: 0px;
+}
+
+.mat-row, .mat-header-row {
+  padding: 0 14px !important;
+}
+
+.full-width,
+.full-width .mat-form-field {
+  width: 100%;
+  display: inline-block;
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+/*display: inline-block;
+width: 34px;
+height: 34px;
+border-radius: 50%;
+border: 1px solid white;
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover;*/
+> img {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #007ac2;
+  border-radius: 50%;
+}
+}
+
+.search-box {
+  font-size: 16px;
+  width: 33%;
+}
+
+.link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.page-header {
+  padding: 0 !important;
+  margin-top: 0px;
+}
+
+.page-header h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.card-info-text {
+  margin-bottom: 8px;
+}
+
+.button-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.search-box {
+  font-size: 18px;
+  width: 33%;
+}
+
+.tool-button-spacer {
+  margin-left: 8px;
+}
+
+.tool-button {
+  margin-left: 0px;
+}
+
+.mat-card, .mat-drawer-container{
+  color: #636363;
+}
+
+.ngx-datatable.material {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.filter-container {
+  padding: 4px 8px;
+  color: #636363;
+}
+
+.filter-container h1, h2, h3, h4, h5 {
+  margin-top: 4px;
+}
+
+.is-active {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.mat-header-cell.action-cell,
+.mat-cell.action-cell {
+  flex: 0 0 32px;
+}
+
+.match-result .mat-icon {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 36px;
 }

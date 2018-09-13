@@ -1,0 +1,30 @@
+<div class="login-container">
+  <form id="loginForm" name="loginForm" #loginForm="ngForm" (ngSubmit)="login()">
+    <mat-card class="login-card">
+      <mat-card-header class="login-card-header">
+        <img src="/assets/images/logos/ace-login.png" alt="System">
+      </mat-card-header>
+      <mat-card-content class="login-card-content">
+        <div class="card-info-text">Please provide your credentials to access the platform.</div>
+        <mat-error *ngIf="this.error">{{this.error}}</mat-error>
+        <mat-form-field class="full-width">
+          <input type="text" matInput placeholder="Username" [(ngModel)]="loginData.userName" name="userName">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input type="password" matInput placeholder="Password" [(ngModel)]="loginData.password" name="password">
+        </mat-form-field>
+        <div style="margin-top: 16px;">
+          <mat-checkbox color="primary" [(ngModel)]="loginData.rememberMe" name="rememberMe">Remember me</mat-checkbox>
+        </div>
+        <div class="reset-link">
+          <a [routerLink]="'/forgot-password'">I forgot my password.</a>
+        </div>
+        <br />
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button type="submit" color="primary" [disabled]="!(loginData.userName && loginData.password)">Login</button>
+        <a mat-raised-button [routerLink]="'/register'">Register</a>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

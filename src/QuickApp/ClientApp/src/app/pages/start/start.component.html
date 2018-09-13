@@ -1,0 +1,65 @@
+<mat-toolbar color="primary" class="top-bar">
+  <!--span><img src="/assets/images/logos/ACE-Logo.PNG" alt="NPS System" class="brand-icon"></span-->
+  <i> System</i>
+  <span class="spacer"></span>
+  <div class="user-avatar"
+       *ngIf="authGuard.isLoggedIn()"
+       [matTooltip]="authGuard.currentUser().userName"
+       matTooltipPosition="left">
+    <img secureImage src="assets/images/avatar/profile_image.png">
+  </div>
+  <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="authGuard.isLoggedIn()">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/admin/users/details/' + authGuard.currentUser()._id]">
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+    <!--button mat-menu-item [routerLink]="['/admin/settings']">
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button-->
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>power_settings_new</mat-icon>
+      <span>Logout</span>
+    </button>
+    <a mat-menu-item title="www.covis.de" href="https://www.covis.de" target="_blank">
+      <img src="/assets/images/logos/covis-logo.png" style="padding: 8px;" height="30" alt="Dr. Glinz COVIS GmbH"/>
+    </a>
+  </mat-menu>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav autosize [opened]="authGuard.isLoggedIn()" class="mat-elevation-z6">
+    <!-- sidenav content -->
+    <mat-nav-list class="main-menu">
+      <div *ngFor="let entry of menuData" class="menu-category">
+        <h2 class="menu-header mat-elevation-z3">{{ isExpanded ? entry.name : '' }}</h2>
+        <div *ngFor="let subentry of entry.items">
+          <a mat-list-item [routerLink]="['/'+subentry.route]" [routerLinkActive]="['is-active']" *ngIf="subentry.route" class="menu-item">
+            <mat-icon class="menu-icon" >{{subentry.icon}}</mat-icon>
+            <span class="menu-item-label" *ngIf="isExpanded"> {{ subentry.name }} </span>
+          </a>
+          <a mat-list-item (click)="subentry.onClick()" *ngIf="subentry.onClick" class="menu-item">
+            <mat-icon mat-list-icon class="menu-icon">{{subentry.icon}}</mat-icon>
+            <span matLine class="menu-item-label" *ngIf="isExpanded"> {{ subentry.title }} </span>
+          </a>
+        </div>
+      </div>
+    </mat-nav-list>
+    <button  mat-icon-button (click)="isExpanded = !isExpanded" mat-raised-button style="position:relative; left: 26%; margin-top: 0%;">
+      <mat-icon *ngIf="!isExpanded">chevron_right</mat-icon>
+      <mat-icon *ngIf="isExpanded">chevron_left</mat-icon>
+    </button>
+  </mat-sidenav>
+  <!-- primary content -->
+  <mat-sidenav-content class="mainContent">
+    <div class="app-content">
+      <div class="content-container" >
+        <router-outlet *ngIf="!isLoading"></router-outlet>
+        <!-- <app-loading *ngIf="isLoading"></app-loading> -->
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

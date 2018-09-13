@@ -1,0 +1,66 @@
+<div class="login-container" [ngClass]="{'small' : isSent, 'tall' : !isSent}">
+  <form id="userRegistrationForm"
+        name="userRegistrationForm"
+        [formGroup]="userRegistrationForm"
+        novalidate>
+    <mat-card class="login-card">
+      <mat-card-header class="login-card-header">
+        <mat-card-title><h2>Register</h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="login-card-content" *ngIf="!isSent">
+        <div class="card-info-text">Please provide your personal data needed for registration.</div>
+        <mat-form-field class="full-width">
+          <input type="text" matInput placeholder="Firstname" [(ngModel)]="userData.firstName" name="firstName" formControlName="firstName">
+          <!--small [hidden]="!userRegistrationForm.controls['firstName'].hasError('required')"> {{errors.requiredFirstName}} </small>
+          <small [hidden]="!userRegistrationForm.controls['firstName'].hasError('minlength')"> {{errors.firstName}} </small-->
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input type="text" matInput placeholder="Lastname" [(ngModel)]="userData.lastName" name="lastName" formControlName="lastName">
+          <!--small [hidden]="!userRegistrationForm.controls['firstName'].hasError('required')"> {{errors.requiredLastName}} </small>
+          <small [hidden]="!userRegistrationForm.controls['firstName'].hasError('minlength')"> {{errors.lastName}} </small-->
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input type="email" matInput placeholder="Email" [(ngModel)]="userData.email" name="email" formControlName="email">
+          <!--small [hidden]="!userRegistrationForm.controls['email'].hasError('required')"> {{errors.requiredEmail}} </small>
+          <small [hidden]="!userRegistrationForm.controls['email'].hasError('email')"> {{errors.email}} </small-->
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input type="text" matInput placeholder="Username" [(ngModel)]="userData.userName" name="userName" formControlName="userName" >
+          <!--small [hidden]="!userRegistrationForm.controls['userName'].hasError('required')"> {{errors.requiredUserName}} </small>
+          <small [hidden]="!userRegistrationForm.controls['userName'].hasError('minlength')"> {{errors.userName}} </small-->
+        </mat-form-field>
+        <div formGroupName="passwordGroup">
+          <mat-form-field class="full-width">
+            <input type="password" matInput placeholder="Password" [(ngModel)]="userData.password" name="password" formControlName="password">
+            <!--small [hidden]="!userRegistrationForm.controls['passwordGroup'].controls['password'].hasError('required')"> {{errors.requiredPassword}} </small-->
+            <small [hidden]="!userRegistrationForm.controls['passwordGroup'].controls['password'].hasError('pattern')"> {{errors.password}} </small>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input type="password" matInput placeholder="Repeat Password" [(ngModel)]="userData.repeatPassword" name="repeatPassword" formControlName="repeatPassword">
+            <!--small [hidden]="!userRegistrationForm.controls['passwordGroup'].controls['repeatPassword'].hasError('required')"> {{errors.requiredPassword}} </small-->
+            <small [hidden]="userRegistrationForm.controls['passwordGroup'].controls['repeatPassword'].hasError('required') || !userRegistrationForm.controls['passwordGroup'].hasError('nomatch')"> {{errors.repeatPassword}} </small>
+          </mat-form-field>
+        </div>
+        <div style="margin-top: 16px;">
+          <mat-checkbox color="primary" [(ngModel)]="userData.hasTaCAccepted" name="hasTaCAccepted" [ngModelOptions]="{standalone: true}">Accepted Terms &amp; Conditions.</mat-checkbox>
+        </div>
+        <div (click)="showTaC()" style="margin-top: 16px; text-decoration: underline; cursor: pointer">Show Terms &amp; Conditions</div>
+      </mat-card-content>
+      <mat-card-content class="login-card-content" *ngIf="isSent">
+        <div class="card-info-text">
+          Thank you for submitting your registration!<br>
+          <br>
+          You'll be informed as soon as your registration has been approved.
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button type="submit" color="primary"
+                [disabled]="(!userRegistrationForm.valid || !userData.hasTaCAccepted)"
+                (click)="register()"
+                *ngIf="!isSent">Send</button>
+        <a mat-raised-button [routerLink]="'/login'" *ngIf="!isSent">Cancel</a>
+        <a mat-raised-button [routerLink]="'/login'" *ngIf="isSent" color="primary">Back to Login</a>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

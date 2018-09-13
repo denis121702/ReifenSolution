@@ -1,0 +1,12 @@
+<h2 md-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content style="overflow: hidden;">
+  <span [innerHtml]="data.message"></span>
+  <div *ngIf="data.export" style="display: inline-block; padding-top: 10px; padding-bottom: 10px;">
+    <mat-checkbox checked="true">Export in Cloud</mat-checkbox>
+    <mat-checkbox checked="true">Export per Mail</mat-checkbox>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" *ngIf="data.confirmText" (click)="confirm()">{{ data.confirmText }}</button>
+    <button mat-raised-button mat-dialog-close class="action-button-spacer">Cancel</button>
+</mat-dialog-actions>
