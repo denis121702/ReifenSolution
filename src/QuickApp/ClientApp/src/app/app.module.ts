@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {ToastaModule} from 'ngx-toasta';
 
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
@@ -17,6 +18,15 @@ import {BackendService} from './services/backend.service';
 import {AuthGuard} from './services/auth-guard.service';
 import {AuthenticationService} from './services/authentication.service';
 import {HttpModule} from '@angular/http';
+import {EndpointFactory} from './services/endpoint-factory.service';
+import {HomeComponent} from './pages/home/home.component';
+import {NotFoundComponent} from './pages/not-found/not-found.component';
+import {AlertService} from './services/alert.service';
+import {ConfigurationService} from './services/configuration.service';
+import {LocalStoreManager} from './services/local-store-manager.service';
+import {HttpClientModule} from '@angular/common/http';
+import {AuthService} from './services/auth.service';
+import {HomeLayoutComponent} from './layouts/home-layout.component';
 
 @NgModule({
   declarations: [
@@ -25,23 +35,32 @@ import {HttpModule} from '@angular/http';
     WelcomeComponent,
     DashboardComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent,
+    NotFoundComponent,
+    HomeLayoutComponent
   ],
   imports: [
     AppRouters,
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     SharedModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ToastaModule.forRoot(),
   ],
   providers: [
     AuthGuard,
+    AuthService,
     AuthenticationService,
+    ConfigurationService,
+    LocalStoreManager,
     BackendService,
-    PagerService
+    PagerService,
+    EndpointFactory,
+    AlertService
   ],
   bootstrap: [AppComponent]
 })

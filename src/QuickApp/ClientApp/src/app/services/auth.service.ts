@@ -1,10 +1,5 @@
-// ====================================================
-// More Templates: https://www.ebenmonney.com/templates
-// Email: support@ebenmonney.com
-// ====================================================
-
 import { Injectable } from '@angular/core';
-import { Router, NavigationExtras } from "@angular/router";
+import { Router, NavigationExtras } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -33,10 +28,12 @@ export class AuthService {
   private _loginStatus = new Subject<boolean>();
 
 
-  constructor(private router: Router, private configurations: ConfigurationService, private endpointFactory: EndpointFactory, private localStorage: LocalStoreManager) {
+  constructor(private router: Router,
+              private configurations: ConfigurationService,
+              private endpointFactory: EndpointFactory,
+              private localStorage: LocalStoreManager) {
     this.initializeLoginStatus();
   }
-
 
   private initializeLoginStatus() {
     this.localStorage.getInitEvent().subscribe(() => {
@@ -44,30 +41,30 @@ export class AuthService {
     });
   }
 
-
   gotoPage(page: string, preserveParams = true) {
 
-    let navigationExtras: NavigationExtras = {
-      queryParamsHandling: preserveParams ? "merge" : "", preserveFragment: preserveParams
+    const navigationExtras: NavigationExtras = {
+      queryParamsHandling: preserveParams ? 'merge' : '', preserveFragment: preserveParams
     };
-
 
     this.router.navigate([page], navigationExtras);
   }
 
 
   redirectLoginUser() {
-    let redirect = this.loginRedirectUrl && this.loginRedirectUrl != '/' && this.loginRedirectUrl != ConfigurationService.defaultHomeUrl ? this.loginRedirectUrl : this.homeUrl;
+    const redirect = this.loginRedirectUrl &&
+                     this.loginRedirectUrl !== '/' &&
+                     this.loginRedirectUrl !== ConfigurationService.defaultHomeUrl
+                      ? this.loginRedirectUrl : this.homeUrl;
     this.loginRedirectUrl = null;
 
+    const urlParamsAndFragment = Utilities.splitInTwo(redirect, '#');
+    const urlAndParams = Utilities.splitInTwo(urlParamsAndFragment.firstPart, '?');
 
-    let urlParamsAndFragment = Utilities.splitInTwo(redirect, '#');
-    let urlAndParams = Utilities.splitInTwo(urlParamsAndFragment.firstPart, '?');
-
-    let navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       fragment: urlParamsAndFragment.secondPart,
       queryParams: Utilities.getQueryParamsFromString(urlAndParams.secondPart),
-      queryParamsHandling: "merge"
+      queryParamsHandling: 'merge'
     };
 
     this.router.navigate([urlAndParams.firstPart], navigationExtras);
@@ -75,7 +72,7 @@ export class AuthService {
 
 
   redirectLogoutUser() {
-    let redirect = this.logoutRedirectUrl ? this.logoutRedirectUrl : this.loginUrl;
+    const redirect = this.logoutRedirectUrl ? this.logoutRedirectUrl : this.loginUrl;
     this.logoutRedirectUrl = null;
 
     this.router.navigate([redirect]);
@@ -89,17 +86,14 @@ export class AuthService {
 
 
   reLogin() {
-
     this.localStorage.deleteData(DBkeys.TOKEN_EXPIRES_IN);
 
     if (this.reLoginDelegate) {
       this.reLoginDelegate();
-    }
-    else {
+    } else {
       this.redirectForLogin();
     }
   }
-
 
   refreshLogin() {
     return this.endpointFactory.getRefreshLoginEndpoint<LoginResponse>().pipe(
@@ -109,8 +103,9 @@ export class AuthService {
 
   login(userName: string, password: string, rememberMe?: boolean) {
 
-    if (this.isLoggedIn)
+    if (this.isLoggedIn) {
       this.logout();
+    }
 
     return this.endpointFactory.getLoginEndpoint<LoginResponse>(userName, password).pipe(
       map(response => this.processLoginResponse(response, rememberMe)));
@@ -119,29 +114,32 @@ export class AuthService {
 
   private processLoginResponse(response: LoginResponse, rememberMe: boolean) {
 
-    let accessToken = response.access_token;
+    const accessToken = response.access_token;
 
-    if (accessToken == null)
-      throw new Error("Received accessToken was empty");
+    if (accessToken == null) {
+      throw new Error('Received accessToken was empty');
+    }
 
-    let idToken = response.id_token;
-    let refreshToken = response.refresh_token || this.refreshToken;
-    let expiresIn = response.expires_in;
+    const idToken = response.id_token;
+    const refreshToken = response.refresh_token || this.refreshToken;
+    const expiresIn = response.expires_in;
 
-    let tokenExpiryDate = new Date();
+    const tokenExpiryDate = new Date();
     tokenExpiryDate.setSeconds(tokenExpiryDate.getSeconds() + expiresIn);
 
-    let accessTokenExpiry = tokenExpiryDate;
+    const accessTokenExpiry = tokenExpiryDate;
 
-    let jwtHelper = new JwtHelper();
-    let decodedIdToken = <IdToken>jwtHelper.decodeToken(response.id_token);
+    const jwtHelper = new JwtHelper();
+    const decodedIdToken = <IdToken>jwtHelper.decodeToken(response.id_token);
 
-    let permissions: PermissionValues[] = Array.isArray(decodedIdToken.permission) ? decodedIdToken.permission : [decodedIdToken.permission];
+    const permissions: PermissionValues[] =
+      Array.isArray(decodedIdToken.permission) ? decodedIdToken.permission : [decodedIdToken.permission];
 
-    if (!this.isLoggedIn)
+    if (!this.isLoggedIn) {
       this.configurations.import(decodedIdToken.configuration);
+    }
 
-    let user = new User(
+    const user = new User(
       decodedIdToken.sub,
       decodedIdToken.name,
       decodedIdToken.fullname,
@@ -158,9 +156,13 @@ export class AuthService {
     return user;
   }
 
-
-  private saveUserDetails(user: User, permissions: PermissionValues[], accessToken: string, idToken: string, refreshToken: string, expiresIn: Date, rememberMe: boolean) {
-
+  private saveUserDetails(user: User,
+                          permissions: PermissionValues[],
+                          accessToken: string,
+                          idToken: string,
+                          refreshToken: string,
+                          expiresIn: Date,
+                          rememberMe: boolean) {
     if (rememberMe) {
       this.localStorage.savePermanentData(accessToken, DBkeys.ACCESS_TOKEN);
       this.localStorage.savePermanentData(idToken, DBkeys.ID_TOKEN);
@@ -168,8 +170,7 @@ export class AuthService {
       this.localStorage.savePermanentData(expiresIn, DBkeys.TOKEN_EXPIRES_IN);
       this.localStorage.savePermanentData(permissions, DBkeys.USER_PERMISSIONS);
       this.localStorage.savePermanentData(user, DBkeys.CURRENT_USER);
-    }
-    else {
+    } else {
       this.localStorage.saveSyncedSessionData(accessToken, DBkeys.ACCESS_TOKEN);
       this.localStorage.saveSyncedSessionData(idToken, DBkeys.ID_TOKEN);
       this.localStorage.saveSyncedSessionData(refreshToken, DBkeys.REFRESH_TOKEN);
@@ -180,8 +181,6 @@ export class AuthService {
 
     this.localStorage.savePermanentData(rememberMe, DBkeys.REMEMBER_ME);
   }
-
-
 
   logout(): void {
     this.localStorage.deleteData(DBkeys.ACCESS_TOKEN);
@@ -199,10 +198,10 @@ export class AuthService {
 
   private reevaluateLoginStatus(currentUser?: User) {
 
-    let user = currentUser || this.localStorage.getDataObject<User>(DBkeys.CURRENT_USER);
-    let isLoggedIn = user != null;
+    const user = currentUser || this.localStorage.getDataObject<User>(DBkeys.CURRENT_USER);
+    const isLoggedIn = user != null;
 
-    if (this.previousIsLoggedInCheck != isLoggedIn) {
+    if (this.previousIsLoggedInCheck !== isLoggedIn) {
       setTimeout(() => {
         this._loginStatus.next(isLoggedIn);
       });
@@ -219,7 +218,7 @@ export class AuthService {
 
   get currentUser(): User {
 
-    let user = this.localStorage.getDataObject<User>(DBkeys.CURRENT_USER);
+    const user = this.localStorage.getDataObject<User>(DBkeys.CURRENT_USER);
     this.reevaluateLoginStatus(user);
 
     return user;
@@ -268,6 +267,6 @@ export class AuthService {
   }
 
   get rememberMe(): boolean {
-    return this.localStorage.getDataObject<boolean>(DBkeys.REMEMBER_ME) == true;
+    return this.localStorage.getDataObject<boolean>(DBkeys.REMEMBER_ME) === true;
   }
 }

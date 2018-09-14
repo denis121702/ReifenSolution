@@ -7,11 +7,14 @@ import {AuthGuard} from './services/auth-guard.service';
 import {StartComponent} from './pages/start/start.component';
 import {RegisterComponent} from './pages/register/register.component';
 import {LoginComponent} from './pages/login/login.component';
-
+import {HomeComponent} from './pages/home/home.component';
+import {NotFoundComponent} from './pages/not-found/not-found.component';
+import {AuthService} from './services/auth.service';
+import {HomeLayoutComponent} from './layouts/home-layout.component';
 
 const routes: Routes = [
-  {path: '', component: StartComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always', children: [
-      {path: 'welcome', component: WelcomeComponent},
+  {path: '', component: HomeLayoutComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always', children: [
+      {path: '', component: WelcomeComponent},
       {path: 'dashboard', component: DashboardComponent}
     ]
   },
@@ -20,9 +23,18 @@ const routes: Routes = [
   {path: '**', redirectTo: '/'}
 ];
 
+/*const routes: Routes = [
+  { path: '', component: HomeComponent, canActivate: [AuthGuard], data: { title: 'Home' } },
+  { path: 'login', component: LoginComponent, data: { title: 'Login' } },
+  { path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard], data: { title: 'welcome' } },
+  { path: '**', component: NotFoundComponent, data: { title: 'Page Not Found' } }
+];*/
+
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthService, AuthGuard]
 })
 
 export class AppRouters {}

@@ -1,23 +1,23 @@
-// ====================================================
-// More Templates: https://www.ebenmonney.com/templates
-// Email: support@ebenmonney.com
-// ====================================================
-
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 import { AlertService, MessageSeverity, DialogType } from '../../services/alert.service';
-import { AuthService } from "../../services/auth.service";
+import { AuthService } from '../../services/auth.service';
 import { ConfigurationService } from '../../services/configuration.service';
 import { Utilities } from '../../services/utilities';
 import { UserLogin } from '../../models/user-login.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
-  selector: "app-login",
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent implements OnInit, OnDestroy {
+
+  form: FormGroup;
+  private formSubmitAttempt: boolean;
+
 
   userLogin = new UserLogin();
   isLoading = false;
@@ -29,19 +29,31 @@ export class LoginComponent implements OnInit, OnDestroy {
   isModal = false;
 
 
-  constructor(private alertService: AlertService, private authService: AuthService, private configurations: ConfigurationService) {
-
+  constructor(private fb: FormBuilder,
+              private alertService: AlertService,
+              private authService: AuthService,
+              private configurations: ConfigurationService) {
   }
 
 
+  isFieldInvalid(field: string) {
+    return (
+      (!this.form.get(field).valid && this.form.get(field).touched) ||
+      (this.form.get(field).untouched && this.formSubmitAttempt)
+    );
+  }
+
   ngOnInit() {
+    this.form = this.fb.group({
+      userName: ['', Validators.required],
+      password: ['', Validators.required]
+    });
 
     this.userLogin.rememberMe = this.authService.rememberMe;
 
     if (this.getShouldRedirect()) {
       this.authService.redirectLoginUser();
-    }
-    else {
+    } else {
       this.loginStatusSubscription = this.authService.getLoginStatusEvent().subscribe(isLoggedIn => {
         if (this.getShouldRedirect()) {
           this.authService.redirectLoginUser();
@@ -52,8 +64,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    if (this.loginStatusSubscription)
+    if (this.loginStatusSubscription) {
       this.loginStatusSubscription.unsubscribe();
+    }
   }
 
 
@@ -72,10 +85,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-
   login() {
+    if (!this.form.valid) {
+      return;
+    }
+
     this.isLoading = true;
-    this.alertService.startLoadingMessage("", "Attempting login...");
+    this.alertService.startLoadingMessage('', 'Attempting login...');
 
     this.authService.login(this.userLogin.email, this.userLogin.password, this.userLogin.rememberMe)
       .subscribe(
@@ -86,12 +102,11 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.reset();
 
             if (!this.isModal) {
-              this.alertService.showMessage("Login", `Welcome ${user.userName}!`, MessageSeverity.success);
-            }
-            else {
-              this.alertService.showMessage("Login", `Session for ${user.userName} restored!`, MessageSeverity.success);
+              this.alertService.showMessage('Login', `Welcome ${user.userName}!`, MessageSeverity.success);
+            } else {
+              this.alertService.showMessage('Login', `Session for ${user.userName} restored!`, MessageSeverity.success);
               setTimeout(() => {
-                this.alertService.showStickyMessage("Session Restored", "Please try your last operation again", MessageSeverity.default);
+                this.alertService.showStickyMessage('Session Restored', 'Please try your last operation again', MessageSeverity.default);
               }, 500);
 
               this.closeModal();
@@ -103,16 +118,21 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.alertService.stopLoadingMessage();
 
           if (Utilities.checkNoNetwork(error)) {
-            this.alertService.showStickyMessage(Utilities.noNetworkMessageCaption, Utilities.noNetworkMessageDetail, MessageSeverity.error, error);
-            this.offerAlternateHost();
-          }
-          else {
-            let errorMessage = Utilities.findHttpResponseMessage("error_description", error);
 
-            if (errorMessage)
-              this.alertService.showStickyMessage("Unable to login", errorMessage, MessageSeverity.error, error);
-            else
-              this.alertService.showStickyMessage("Unable to login", "An error occured whilst logging in, please try again later.\nError: " + Utilities.getResponseBody(error), MessageSeverity.error, error);
+            this.alertService.showStickyMessage(
+              Utilities.noNetworkMessageCaption, Utilities.noNetworkMessageDetail, MessageSeverity.error, error);
+            this.offerAlternateHost();
+
+          } else {
+
+            const errorMessage = Utilities.findHttpResponseMessage('error_description', error);
+            if (errorMessage) {
+              this.alertService.showStickyMessage('Unable to login', errorMessage, MessageSeverity.error, error);
+            } else {
+              this.alertService.showStickyMessage('Unable to login',
+                'An error occured whilst logging in, please try again later.\nError: '
+                + Utilities.getResponseBody(error), MessageSeverity.error, error);
+            }
           }
 
           setTimeout(() => {
@@ -125,12 +145,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   offerAlternateHost() {
 
     if (Utilities.checkIsLocalHost(location.origin) && Utilities.checkIsLocalHost(this.configurations.baseUrl)) {
-      this.alertService.showDialog("Dear Developer!\nIt appears your backend Web API service is not running...\n" +
-        "Would you want to temporarily switch to the online Demo API below?(Or specify another)",
+      this.alertService.showDialog('Dear Developer!\nIt appears your backend Web API service is not running...\n' +
+        'Would you want to temporarily switch to the online Demo API below?(Or specify another)',
         DialogType.prompt,
         (value: string) => {
           this.configurations.baseUrl = value;
-          this.alertService.showStickyMessage("API Changed!", "The target Web API has been changed to: " + value, MessageSeverity.warn);
+          this.alertService.showStickyMessage('API Changed!', 'The target Web API has been changed to: ' + value, MessageSeverity.warn);
         },
         null,
         null,
