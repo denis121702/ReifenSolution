@@ -5,11 +5,11 @@ import { HttpResponseBase, HttpResponse, HttpErrorResponse } from '@angular/comm
 @Injectable()
 export class Utilities {
 
-    public static readonly captionAndMessageSeparator = ":";
-    public static readonly noNetworkMessageCaption = "No Network";
-    public static readonly noNetworkMessageDetail = "The server cannot be reached";
-    public static readonly accessDeniedMessageCaption = "Access Denied!";
-    public static readonly accessDeniedMessageDetail = "";
+    public static readonly captionAndMessageSeparator = ':';
+    public static readonly noNetworkMessageCaption = 'No Network';
+    public static readonly noNetworkMessageDetail = 'The server cannot be reached';
+    public static readonly accessDeniedMessageCaption = 'Access Denied!';
+    public static readonly accessDeniedMessageDetail = '';
 
     public static getHttpResponseMessage(data: HttpResponseBase | any): string[] {
 
@@ -115,7 +115,7 @@ export class Utilities {
     public static checkIsLocalHost(url: string, base?: string) {
         if (url) {
             let location = new URL(url, base);
-            return location.hostname === "localhost" || location.hostname === "127.0.0.1";
+            return location.hostname === 'localhost' || location.hostname === '127.0.0.1';
         }
 
         return false;
@@ -130,8 +130,8 @@ export class Utilities {
 
         let params: { [key: string]: string } = {};
 
-        for (let param of paramString.split("&")) {
-            let keyValue = Utilities.splitInTwo(param, "=");
+        for (let param of paramString.split('&')) {
+            let keyValue = Utilities.splitInTwo(param, '=');
             params[keyValue.firstPart] = keyValue.secondPart;
         }
 
@@ -179,7 +179,7 @@ export class Utilities {
             simpleObject[prop] = object[prop];
         }
 
-        result = "[***Sanitized Object***]: " + JSON.stringify(simpleObject);
+        result = '[***Sanitized Object***]: ' + JSON.stringify(simpleObject);
 
         return result;
     }
@@ -190,7 +190,7 @@ export class Utilities {
             return JSON.parse(value);
         }
         catch (e) {
-            if (value === "undefined")
+            if (value === 'undefined')
                 return void 0;
 
             return value;
@@ -271,7 +271,7 @@ export class Utilities {
         if (window.location.origin)
             base = window.location.origin;
         else
-            base = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+            base = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
 
         return base.replace(/\/$/, '');
     }
@@ -281,29 +281,29 @@ export class Utilities {
 
         date = new Date(date);
 
-        let dayNames = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-        let monthNames = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        let dayNames = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        let monthNames = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
         let dayOfWeek = date.getDay();
         let dayOfMonth = date.getDate();
-        let sup = "";
+        let sup = '';
         let month = date.getMonth();
         let year = date.getFullYear();
 
         if (dayOfMonth == 1 || dayOfMonth == 21 || dayOfMonth == 31) {
-            sup = "st";
+            sup = 'st';
         }
         else if (dayOfMonth == 2 || dayOfMonth == 22) {
-            sup = "nd";
+            sup = 'nd';
         }
         else if (dayOfMonth == 3 || dayOfMonth == 23) {
-            sup = "rd";
+            sup = 'rd';
         }
         else {
-            sup = "th";
+            sup = 'th';
         }
 
-        let dateString = dayNames[dayOfWeek] + ", " + dayOfMonth + sup + " " + monthNames[month] + " " + year;
+        let dateString = dayNames[dayOfWeek] + ', ' + dayOfMonth + sup + ' ' + monthNames[month] + ' ' + year;
 
         return dateString;
     }
@@ -312,11 +312,11 @@ export class Utilities {
 
         date = new Date(date);
 
-        let period = "";
+        let period = '';
         let minute = date.getMinutes().toString();
         let hour = date.getHours();
 
-        period = hour < 12 ? "AM" : "PM";
+        period = hour < 12 ? 'AM' : 'PM';
 
         if (hour == 0) {
             hour = 12;
@@ -326,21 +326,21 @@ export class Utilities {
         }
 
         if (minute.length == 1) {
-            minute = "0" + minute;
+            minute = '0' + minute;
         }
 
-        let timeString = hour + ":" + minute + " " + period;
+        let timeString = hour + ':' + minute + ' ' + period;
 
 
         return timeString;
     }
 
-    public static printDate(date: Date, separator = "at") {
+    public static printDate(date: Date, separator = 'at') {
         return `${Utilities.printDateOnly(date)} ${separator} ${Utilities.printTimeOnly(date)}`;
     }
 
 
-    public static printFriendlyDate(date: Date, separator = "-") {
+    public static printFriendlyDate(date: Date, separator = '-') {
         let today = new Date(); today.setHours(0, 0, 0, 0);
         let yesterday = new Date(today); yesterday.setDate(yesterday.getDate() - 1);
         let test = new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -353,17 +353,17 @@ export class Utilities {
             return Utilities.printDate(date, separator);
     }
 
-    public static printShortDate(date: Date, separator = "/", dateTimeSeparator = "-") {
+    public static printShortDate(date: Date, separator = '/', dateTimeSeparator = '-') {
 
         var day = date.getDate().toString();
         var month = (date.getMonth() + 1).toString();
         var year = date.getFullYear();
 
         if (day.length == 1)
-            day = "0" + day;
+            day = '0' + day;
 
         if (month.length == 1)
-            month = "0" + month;
+            month = '0' + month;
 
         return `${month}${separator}${day}${separator}${year} ${dateTimeSeparator} ${Utilities.printTimeOnly(date)}`;
     }
@@ -379,7 +379,7 @@ export class Utilities {
 
             if (typeof date === 'string' || date instanceof String) {
                 if (date.search(/[a-su-z+]/i) == -1)
-                    date = date + "Z";
+                    date = date + 'Z';
 
                 return new Date(date);
             }
@@ -416,7 +416,7 @@ export class Utilities {
         let seconds = delta % 60;  // in theory the modulus is not required
 
 
-        let printedDays = "";
+        let printedDays = '';
 
         if (days)
             printedDays = `${days} days`;
@@ -432,7 +432,7 @@ export class Utilities {
 
 
         if (!printedDays)
-            printedDays = "0";
+            printedDays = '0';
 
         return printedDays;
     }
@@ -505,9 +505,9 @@ export class Utilities {
         if (!text)
             return text;
 
-        return text.replace(/([A-Z][a-z]+)/g, " $1")
-            .replace(/([A-Z][A-Z]+)/g, " $1")
-            .replace(/([^A-Za-z ]+)/g, " $1");
+        return text.replace(/([A-Z][a-z]+)/g, ' $1')
+            .replace(/([A-Z][A-Z]+)/g, ' $1')
+            .replace(/([^A-Za-z ]+)/g, ' $1');
     }
 
 
@@ -532,7 +532,7 @@ export class Utilities {
             if (obj[k] === null) {
                 isArray ? obj.splice(k, 1) : delete obj[k];
             }
-            else if (typeof obj[k] == "object") {
+            else if (typeof obj[k] == 'object') {
                 Utilities.removeNulls(obj[k]);
             }
 
@@ -572,44 +572,44 @@ export class Utilities {
 
     public static cookies = {
         getItem: (sKey) => {
-            return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+            return decodeURIComponent(document.cookie.replace(new RegExp('(?:(?:^|.*;)\\s*' + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, '\\$&') + '\\s*\\=\\s*([^;]*).*$)|^.*$'), '$1')) || null;
         },
         setItem: (sKey, sValue, vEnd, sPath, sDomain, bSecure) => {
             if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
                 return false;
             }
 
-            var sExpires = "";
+            var sExpires = '';
 
             if (vEnd) {
                 switch (vEnd.constructor) {
                     case Number:
-                        sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+                        sExpires = vEnd === Infinity ? '; expires=Fri, 31 Dec 9999 23:59:59 GMT' : '; max-age=' + vEnd;
                         break;
                     case String:
-                        sExpires = "; expires=" + vEnd;
+                        sExpires = '; expires=' + vEnd;
                         break;
                     case Date:
-                        sExpires = "; expires=" + vEnd.toUTCString();
+                        sExpires = '; expires=' + vEnd.toUTCString();
                         break;
                 }
             }
 
-            document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
+            document.cookie = encodeURIComponent(sKey) + '=' + encodeURIComponent(sValue) + sExpires + (sDomain ? '; domain=' + sDomain : '') + (sPath ? '; path=' + sPath : '') + (bSecure ? '; secure' : '');
             return true;
         },
         removeItem: (sKey, sPath, sDomain) => {
             if (!sKey) {
                 return false;
             }
-            document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
+            document.cookie = encodeURIComponent(sKey) + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' + (sDomain ? '; domain=' + sDomain : '') + (sPath ? '; path=' + sPath : '');
             return true;
         },
         hasItem: (sKey) => {
-            return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+            return (new RegExp('(?:^|;\\s*)' + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, '\\$&') + '\\s*\\=')).test(document.cookie);
         },
         keys: () => {
-            var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+            var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, '').split(/\s*(?:\=[^;]*)?;\s*/);
             for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
             return aKeys;
         }

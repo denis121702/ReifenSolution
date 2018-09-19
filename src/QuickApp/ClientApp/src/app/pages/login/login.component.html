@@ -4,20 +4,17 @@
       <form id="loginForm" name="loginForm" [formGroup]="form" (ngSubmit)="login()">
         <p>Please login to continue</p>
         <mat-form-field class="full-width-input">
-          <input matInput placeholder="User" [(ngModel)]="this.userLogin.email" required>
+          <input matInput placeholder="User"  formControlName="userName" [(ngModel)]="userLogin.email" required>
           <mat-error *ngIf="isFieldInvalid('userName')">
             Please inform your user name
           </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width-input">
-          <input matInput type="password" placeholder="Password" [(ngModel)]="this.userLogin.password" required>
-          <mat-error *ngIf="isFieldInvalid('userName')">
+          <input matInput type="password" placeholder="Password"  formControlName="password" [(ngModel)]="userLogin.password"  required>
+          <mat-error *ngIf="isFieldInvalid('password')">
             Please inform your password
           </mat-error>
         </mat-form-field>
-        <div>
-          <mat-checkbox color="primary" [(ngModel)]="this.userLogin.rememberMe" name="rememberMe">Remember me</mat-checkbox>
-        </div>
         <button mat-raised-button color="primary" type="submit">Login</button>
       </form>
     </mat-card-content>

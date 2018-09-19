@@ -1,34 +1,44 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import {IUser} from '../models/user';
+import { CanActivate,
+      Router,
+      ActivatedRouteSnapshot,
+      RouterStateSnapshot,
+      CanActivateChild,
+      NavigationExtras,
+      CanLoad,
+      Route } from '@angular/router';
+import { AuthService } from './auth.service';
+
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
+  constructor(private authService: AuthService, private router: Router) { }
 
-  constructor(private router: Router) { }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-    currentUser(): IUser {
-      if (localStorage.getItem('currentUser')) {
-        return JSON.parse(localStorage.getItem('currentUser'));
-      }
-      return new IUser();
+    const url: string = state.url;
+    return this.checkLogin(url);
+  }
+
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    return this.canActivate(route, state);
+  }
+
+  canLoad(route: Route): boolean {
+
+    let url = `/${route.path}`;
+    return this.checkLogin(url);
+  }
+
+  checkLogin(url: string): boolean {
+
+    if (this.authService.isLoggedIn) {
+      return true;
     }
 
-    isLoggedIn() {
-      if (localStorage.getItem('currentUser')) {
-        // logged in so return true
-        return true;
-      } // else { return true; }
-    }
+    this.authService.loginRedirectUrl = url;
+    this.router.navigate(['/login']);
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-      if (localStorage.getItem('currentUser')) {
-        // logged in so return true
-        return true;
-      }
-      console.log(state.url);
-      // not logged in so redirect to login page with the return url
-      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
-      return false;
-    }
+    return false;
+  }
 }

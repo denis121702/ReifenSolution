@@ -1,12 +1,7 @@
-// ====================================================
-// More Templates: https://www.ebenmonney.com/templates
-// Email: support@ebenmonney.com
-// ====================================================
 
 export class User {
-    // Note: Using only optional constructor properties without backing store disables typescript's type checking for the type
-    constructor(id?: string, userName?: string, fullName?: string, email?: string, jobTitle?: string, phoneNumber?: string, roles?: string[]) {
 
+    constructor(id?: string, userName?: string, fullName?: string, email?: string, jobTitle?: string, phoneNumber?: string, roles?: string[]) {
         this.id = id;
         this.userName = userName;
         this.fullName = fullName;
@@ -16,16 +11,15 @@ export class User {
         this.roles = roles;
     }
 
-
     get friendlyName(): string {
         let name = this.fullName || this.userName;
 
-        if (this.jobTitle)
+        if (this.jobTitle) {
             name = this.jobTitle + " " + name;
+        }
 
         return name;
     }
-
 
     public id: string;
     public userName: string;

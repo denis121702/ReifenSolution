@@ -29,7 +29,7 @@ export class StartComponent implements OnInit  {
 
   ngOnInit() {
     /*this.menuItemService.findAll().subscribe((res: any) => {
-      console.log('StartComponent');
+      console.user('StartComponent');
       if (res) {
         this.menuData = res;
         localStorage.setItem(StorageKeys.MENU_ITEMS, JSON.stringify(res));

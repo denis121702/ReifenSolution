@@ -12,12 +12,10 @@ import { AppRouters } from './app.routes';
 import {StartComponent} from './pages/start/start.component';
 import {LoginComponent} from './pages/login/login.component';
 import {RegisterComponent} from './pages/register/register.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PagerService} from './services/pager.service';
 import {BackendService} from './services/backend.service';
 import {AuthGuard} from './services/auth-guard.service';
 import {AuthenticationService} from './services/authentication.service';
-import {HttpModule} from '@angular/http';
 import {EndpointFactory} from './services/endpoint-factory.service';
 import {HomeComponent} from './pages/home/home.component';
 import {NotFoundComponent} from './pages/not-found/not-found.component';
@@ -27,6 +25,8 @@ import {LocalStoreManager} from './services/local-store-manager.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthService} from './services/auth.service';
 import {HomeLayoutComponent} from './layouts/home-layout.component';
+import {AccountEndpoint} from './services/account-endpoint.service';
+import {AccountService} from './services/account.service';
 
 @NgModule({
   declarations: [
@@ -43,9 +43,7 @@ import {HomeLayoutComponent} from './layouts/home-layout.component';
   imports: [
     AppRouters,
     BrowserModule,
-    FormsModule,
     HttpClientModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
     SharedModule,
     FlexLayoutModule,
@@ -60,7 +58,9 @@ import {HomeLayoutComponent} from './layouts/home-layout.component';
     BackendService,
     PagerService,
     EndpointFactory,
-    AlertService
+    AlertService,
+    AccountEndpoint,
+    AccountService
   ],
   bootstrap: [AppComponent]
 })

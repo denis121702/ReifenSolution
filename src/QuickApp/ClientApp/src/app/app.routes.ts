@@ -15,7 +15,8 @@ import {HomeLayoutComponent} from './layouts/home-layout.component';
 const routes: Routes = [
   {path: '', component: HomeLayoutComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always', children: [
       {path: '', component: WelcomeComponent},
-      {path: 'dashboard', component: DashboardComponent}
+      {path: 'dashboard', component: DashboardComponent},
+      {path: 'admin/users', loadChildren: './pages/user/user.module#UserModule'},
     ]
   },
   {path: 'login', component: LoginComponent},

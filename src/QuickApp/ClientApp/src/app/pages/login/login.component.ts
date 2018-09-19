@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
-import { AlertService, MessageSeverity, DialogType } from '../../services/alert.service';
+import {AlertService, MessageSeverity, DialogType, AlertDialog, AlertMessage} from '../../services/alert.service';
 import { AuthService } from '../../services/auth.service';
 import { ConfigurationService } from '../../services/configuration.service';
 import { Utilities } from '../../services/utilities';
 import { UserLogin } from '../../models/user-login.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+/*import {MatSnackBar} from '@angular/material';*/
 
 @Component({
   selector: 'app-login',
@@ -18,21 +19,21 @@ export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup;
   private formSubmitAttempt: boolean;
 
-
+  // userLogin = { email: '', password: ''};
   userLogin = new UserLogin();
+
   isLoading = false;
   formResetToggle = true;
   modalClosedCallback: () => void;
   loginStatusSubscription: any;
 
-  @Input()
-  isModal = false;
-
 
   constructor(private fb: FormBuilder,
               private alertService: AlertService,
               private authService: AuthService,
-              private configurations: ConfigurationService) {
+              private configurations: ConfigurationService,
+              // private snackBar: MatSnackBar
+  ) {
   }
 
 
@@ -60,7 +61,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       });
     }
+
+    /*this.alertService.getDialogEvent().subscribe(alert => this.showMessage(alert));
+    this.alertService.getMessageEvent().subscribe(message => this.showToast(message));
+    this.alertService.getStickyMessageEvent().subscribe(message => this.showToast(message));*/
   }
+
 
 
   ngOnDestroy() {
@@ -71,7 +77,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   getShouldRedirect() {
-    return !this.isModal && this.authService.isLoggedIn && !this.authService.isSessionExpired;
+    return this.authService.isLoggedIn && !this.authService.isSessionExpired;
   }
 
 
@@ -96,22 +102,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.login(this.userLogin.email, this.userLogin.password, this.userLogin.rememberMe)
       .subscribe(
         user => {
-          setTimeout(() => {
+
             this.alertService.stopLoadingMessage();
             this.isLoading = false;
             this.reset();
 
-            if (!this.isModal) {
               this.alertService.showMessage('Login', `Welcome ${user.userName}!`, MessageSeverity.success);
-            } else {
-              this.alertService.showMessage('Login', `Session for ${user.userName} restored!`, MessageSeverity.success);
-              setTimeout(() => {
-                this.alertService.showStickyMessage('Session Restored', 'Please try your last operation again', MessageSeverity.default);
-              }, 500);
 
-              this.closeModal();
-            }
-          }, 500);
         },
         error => {
 
