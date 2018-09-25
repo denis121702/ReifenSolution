@@ -1,18 +1,15 @@
-﻿// ====================================================
-// More Templates: https://www.ebenmonney.com/templates
-// Email: support@ebenmonney.com
-// ====================================================
-
-using DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace DAL.Repositories.Interfaces
+﻿namespace DAL.Repositories.Interfaces
 {
+    using DAL.Models;    
+    using System.Collections.Generic;    
+    using System.Threading.Tasks;
+
     public interface ICustomerRepository : IRepository<Customer>
     {
         IEnumerable<Customer> GetTopActiveCustomers(int count);
+
         IEnumerable<Customer> GetAllCustomersData();
+
+        Task<PageResponse> GetCustomers(PageRequest pageRequest, TransactionalInformation transaction);
     }
 }

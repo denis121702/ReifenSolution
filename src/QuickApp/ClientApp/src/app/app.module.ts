@@ -27,6 +27,8 @@ import {AuthService} from './services/auth.service';
 import {HomeLayoutComponent} from './layouts/home-layout.component';
 import {AccountEndpoint} from './services/account-endpoint.service';
 import {AccountService} from './services/account.service';
+import {CustomerEndpoint} from './services/customer-endpoint.service';
+import {CustomerService} from './services/customer.service';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import {AccountService} from './services/account.service';
     EndpointFactory,
     AlertService,
     AccountEndpoint,
-    AccountService
+    AccountService,
+    CustomerEndpoint,
+    CustomerService
   ],
   bootstrap: [AppComponent]
 })

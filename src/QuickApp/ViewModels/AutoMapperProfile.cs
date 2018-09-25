@@ -1,24 +1,24 @@
-﻿// ====================================================
-// More Templates: https://www.ebenmonney.com/templates
-// Email: support@ebenmonney.com
-// ====================================================
-
-using AutoMapper;
-using DAL.Core;
-using DAL.Models;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuickApp.ViewModels
+﻿namespace QuickApp.ViewModels
 {
+    using AutoMapper;
+    using DAL;
+    using DAL.Core;
+    using DAL.Models;
+    using Microsoft.AspNetCore.Identity;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
+            CreateMap<PageResponseViewData, PageRequest>();
+
+            CreateMap<PageRequest, PageResponseViewData>();
+
             CreateMap<ApplicationUser, UserViewModel>()
                    .ForMember(d => d.Roles, map => map.Ignore());
             CreateMap<UserViewModel, ApplicationUser>()
