@@ -8,7 +8,6 @@ import {Utilities} from '../../../services/utilities';
 import {AccountService} from '../../../services/account.service';
 import {AlertService, MessageSeverity} from '../../../services/alert.service';
 import {CustomerService} from '../../../services/customer.service';
-import {PageRequest} from '../../../models/common/page-request';
 
 @Component({
   selector: 'app-user-list',
@@ -51,26 +50,19 @@ export class UserListComponent implements OnInit  {
       this.paginator.page,
       this.filterChange,
       this.sort.sortChange).subscribe(customers => {
-          const pageRequest = new PageRequest();
-          pageRequest.startIndex = 0; // this.paginator.pageIndex * this.paginator.pageSize;
-          pageRequest.pageSize =  5; // this.paginator.pageSize;
+          // const pageRequest = new PageRequest();
+          // pageRequest.startIndex = 0; // this.paginator.pageIndex * this.paginator.pageSize;
+          // pageRequest.pageSize =  5; // this.paginator.pageSize;
           /*pageRequest.sortActive = this.sort.active;
           pageRequest.sortDirection =  this.sort.direction;
           pageRequest.filter = this.filterChange.value.toLowerCase();*/
 
-          this.customerService.searchCustomers(pageRequest).subscribe(res => {
-            if (res && res.data) {
-              this.count = res.totalCount;
-              this.resourceSelector.next(res.data as any);
-            }
-          }, error => this.errorMessage = <any>error);
-
-          /*this.accountService.getUsers().subscribe(users => {
+          this.accountService.getUsers().subscribe(users => {
             if (users) {
               this.count = users.length;
               this.resourceSelector.next(users as any);
             }
-          }, error => this.onDataLoadFailed(error));*/
+          }, error => this.onDataLoadFailed(error));
 
     }, error => this.errorMessage = <any>error);
 

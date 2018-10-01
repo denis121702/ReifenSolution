@@ -26,12 +26,8 @@ export class EndpointFactory {
     return this._authService;
   }
 
-
-
   constructor(protected http: HttpClient, protected configurations: ConfigurationService, private injector: Injector) {
-
   }
-
 
   getLoginEndpoint<T>(userName: string, password: string): Observable<T> {
 

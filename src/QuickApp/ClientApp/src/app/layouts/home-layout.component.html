@@ -1,6 +1,7 @@
+<!--
 <mat-toolbar color="primary">
   <span>
-    Angular NavBar + Login Example #02
+    Test App
   </span>
   <span class="fill-remaining-space"></span>
   <button [routerLink]="['/']" mat-button>Home</button>
@@ -9,4 +10,83 @@
   <button mat-button (click)="onLogout()">Logout</button>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<div class="main-content">
+  <mat-sidenav-container>
+    1111111111111111111111111
+    <mat-sidenav autosize #sidenav class="mat-elevation-z6 sidenav">
+        <div *ngFor="let entry of menuData" >
+          <h2>{{entry.name}}</h2>
+        </div>
+    </mat-sidenav>
+22222222222222222222222222
+    <div class="app-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-container>
+</div>
+-->
+
+<!--mat-toolbar color="warn">
+  <mat-toolbar-row>
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" color="primary">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar-->
+
+
+<mat-toolbar color="primary" class="top-bar">
+  <span><img src="/assets/images/logos/ACE-Logo.PNG" alt="System" class="brand-icon"></span>
+  <i>System</i>
+  <span class="spacer"></span>
+  <div class="user-avatar"
+       *ngIf="authService.isLoggedIn"
+       [matTooltip]="authService.currentUser.userName"
+       matTooltipPosition="left">
+    <img secureImage src="assets/images/avatar/profile_image.png">
+  </div>
+  <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="authService.isLoggedIn">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/admin/users/details/' + authService.currentUser.id]">
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button mat-menu-item (click)="onLogout()">
+      <mat-icon>power_settings_new</mat-icon>
+      <span>Logout</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>build</mat-icon>
+      <span>v.0.7.0.0</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<div class="main-content">
+  <mat-sidenav-container>
+    <mat-sidenav #drawer mode="side" opened="true" role="navigation" class="mat-elevation-z6">
+      <!-- sidenav content -->
+      <mat-nav-list class="main-menu">
+        <div *ngFor="let entry of menuData" class="menu-header">
+          <h2 matSubheader class="mat-elevation-z3">{{entry.name}}</h2>
+          <div *ngFor="let subentry of entry.items">
+            <a mat-list-item [routerLink]="['/'+subentry.route]" [routerLinkActive]="['is-active']" *ngIf="subentry.route">
+              <mat-icon>{{subentry.icon}}</mat-icon>
+              <span class="menu-item-label"> {{ subentry.name }} </span>
+            </a>
+            <a mat-list-item (click)="subentry.onClick()" *ngIf="subentry.onClick">
+              <mat-icon>{{subentry.icon}}</mat-icon>
+              <span class="menu-item-label"> {{ subentry.name }} </span>
+            </a>
+          </div>
+        </div>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

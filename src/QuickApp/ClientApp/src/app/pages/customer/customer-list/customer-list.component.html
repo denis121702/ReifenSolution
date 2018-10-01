@@ -1,0 +1,87 @@
+<mat-toolbar class="mat-elevation-z4" style='margin-top: 0px; background-color: #ececec;'>
+  <span>{{ActiveRouteName}}</span>
+  <span class="example-fill-remaining-space"></span>
+  <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+  <div class="button-row tool-button-spacer">
+    <button mat-icon-button class="tool-button" (click)="load()" matTooltip="Refresh">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<div style="padding: 12px 8px;" class="mat-elevation-z4">
+
+  <div class="table-filter">
+    <mat-form-field floatPlaceholder="never">
+      <input matInput #filter placeholder="Filter*">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <!-- ID Column -->
+    <ng-container matColumnDef="customerId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Customer-ID* </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.customerId}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="contactId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Contact-ID* </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.contactId}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="firmenname">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Company* </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.firmenname }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="anrede">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Salutation </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.anrede}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="vorname">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> First name* </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.vorname}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nachname">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Last name* </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.nachname}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Email* </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="sendMailStatus">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Written to </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.sendMailStatus ? 'yes' : 'no'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef class="action-cell"> </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="action-cell">
+        <button mat-icon-button  [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openDeleteDialog(row._id)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+                 [length]="count"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>

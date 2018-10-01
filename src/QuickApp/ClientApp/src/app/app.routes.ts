@@ -1,10 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {DashboardComponent} from './pages/dashboard/dashboard.component';
+
 import {WelcomeComponent} from './pages/welcome/welcome.component';
 import {AuthGuard} from './services/auth-guard.service';
-import {StartComponent} from './pages/start/start.component';
 import {RegisterComponent} from './pages/register/register.component';
 import {LoginComponent} from './pages/login/login.component';
 import {HomeComponent} from './pages/home/home.component';
@@ -14,9 +13,11 @@ import {HomeLayoutComponent} from './layouts/home-layout.component';
 
 const routes: Routes = [
   {path: '', component: HomeLayoutComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always', children: [
-      {path: '', component: WelcomeComponent},
-      {path: 'dashboard', component: DashboardComponent},
+      /*{path: '', component: WelcomeComponent},*/
+      {path: '', component: HomeComponent},
+      {path: 'customers', loadChildren: './pages/customer/customer.module#CustomerModule'},
       {path: 'admin/users', loadChildren: './pages/user/user.module#UserModule'},
+      {path: 'mailers', loadChildren: './pages/mailer/mailer.module#MailerModule' }
     ]
   },
   {path: 'login', component: LoginComponent},

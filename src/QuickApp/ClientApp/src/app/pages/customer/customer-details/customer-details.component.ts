@@ -1,18 +1,17 @@
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-
 import {User} from '../../../models/user.model';
 import {AccountService} from '../../../services/account.service';
 import {AlertService, MessageSeverity} from '../../../services/alert.service';
 import {Utilities} from '../../../services/utilities';
 
 @Component({
-  selector: 'app-user-details',
-  templateUrl: './user-details.component.html',
-  styleUrls: ['./user-details.component.scss']
+  selector: 'app-customer-details',
+  templateUrl: './customer-details.component.html',
+  styleUrls: ['./customer-details.component.scss']
 })
 
-export class UserDetailsComponent implements OnInit {
+export class CustomerDetailsComponent implements OnInit {
 
   errorMessage: string;
   id: string;

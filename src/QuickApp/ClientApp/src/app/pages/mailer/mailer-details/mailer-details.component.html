@@ -1,0 +1,177 @@
+
+<mat-toolbar class="mat-elevation-z4" style='margin-top: 0px; background-color: #ececec;'>
+  <h2>Mailing started {{dataView.timestamp | DateFormatPipe}} - Label: {{dataView.label}} - Status: {{dataView.status}} </h2>
+  <span class="example-fill-remaining-space"></span>
+  <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+  <div class="button-row tool-button-spacer">
+    <button mat-icon-button class="tool-button" *ngIf="!edit"(click)="editEntry();" matTooltip="Edit">
+      <mat-icon >mode_edit</mat-icon>
+    </button>
+    <div class="tool-button-spacer"></div>
+    <button mat-mini-fab class="tool-button" color="primary" [routerLink]="'/mailers'" matTooltip="Back to list" matTooltipPosition="left">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<mat-tab-group class="mat-elevation-z4"> <!--[(selectedIndex)]="activeTabIndex"-->
+  <mat-tab label="Split">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title><h2>Total feedback by {{dataView.votesCount}} of {{dataView.successCustomersCount}} customers</h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="isDataAvailable" style="width: 70%; height: 50%; padding-top: 30px;">
+          <canvas baseChart
+                  [datasets]="splitChartData"
+                  [labels]="splitChartLabels"
+                  [options]="splitChartOptions"
+                  [legend]="barChartLegend"
+                  [colors]="splitChartColors"
+                  [chartType]="barChartType"></canvas>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Feedback Rate">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title style="padding-right: 30px;"><h2>Status Feedback</h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="isDataAvailable" style="width: 70%; height: 50%; padding-top: 30px;">
+          <canvas baseChart
+                  [datasets]="barChartData"
+                  [labels]="barChartLabels"
+                  [options]="barChartOptions"
+                  [legend]="barChartLegend"
+                  [colors]="barChartColors"
+                  [chartType]="barChartType"></canvas>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Customers">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title style="padding-right: 30px;"><h2>Customers</h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div style="display: none" class="table-filter">
+          <mat-form-field floatPlaceholder="never">
+            <input matInput #filter placeholder="Filter*">
+          </mat-form-field>
+        </div>
+
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="customerId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Customer-ID* </mat-header-cell>
+            <mat-cell *matCellDef="let row"> <a target="_blank" [href]="row.token">{{row.customerId}}</a>  </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="contactId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Contact-ID* </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.contactId}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="firmenname">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Company* </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.firmenname }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="isMainQuestionAnswered">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Voted </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.isMainQuestionAnswered ? 'yes' : 'no' }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="anrede">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Salutation </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.anrede}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="vorname">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> First name* </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.vorname}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nachname">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Last name* </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.nachname}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Email* </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator #paginator
+                       [length]="count"
+                       [pageIndex]="0"
+                       [pageSize]="10"
+                       [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Overview">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title><h2>Details</h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content >
+        <mat-form-field>
+          <input matInput placeholder="ID" [ngModel]="dataView._id" name="styleNo" [disabled]='true' >
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Create date"  [ngModel]="dataView.timestamp | DateFormatPipe" name="timestamp" [disabled]='true'>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Status"  [ngModel]="dataView.status" name="status" [disabled]='true'>
+        </mat-form-field>
+        <mat-form-field >
+          <input matInput placeholder="Label" [(ngModel)]="dataView.label" name="label" [disabled]='!edit' >
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Emails success"  [ngModel]="dataView.successCustomersCount" name="successCustomersCount" [disabled]='true'>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Number of feedback"  [ngModel]="dataView.votesCount" name="votesCount" [disabled]='true'>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Emails failed"  [ngModel]="dataView.failureCustomersCount" name="failureCustomersCount" [disabled]='true'>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Number of questions"  [ngModel]="dataView.questionsCount" name="questionsCount" [disabled]='true'>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Token valid (days)"  [ngModel]="dataView.tokenExpiresDays" name="tokenExpiresDays" [disabled]='true'>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="NPS"  [ngModel]="dataView.npsValue" name="npsValue" [disabled]='true'>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Response Rate (%)"  [ngModel]="dataView.responseRateValue" name="responseRateValue" [disabled]='true'>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button  [disabled]="!edit" (click)="cancelEntry();" matTooltip="Cancel Edit">
+          Cancel
+        </button>
+        <button mat-raised-button color="primary"
+                class="tool-button"
+                [disabled]="!edit"
+                (click)="saveEntry();"
+                matTooltip="Save">
+          Save
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>

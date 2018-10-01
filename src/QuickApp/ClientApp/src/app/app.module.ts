@@ -3,17 +3,15 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {ToastaModule} from 'ngx-toasta';
+import {ChartsModule} from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AppRouters } from './app.routes';
-import {StartComponent} from './pages/start/start.component';
 import {LoginComponent} from './pages/login/login.component';
 import {RegisterComponent} from './pages/register/register.component';
 import {PagerService} from './services/pager.service';
-import {BackendService} from './services/backend.service';
 import {AuthGuard} from './services/auth-guard.service';
 import {AuthenticationService} from './services/authentication.service';
 import {EndpointFactory} from './services/endpoint-factory.service';
@@ -29,18 +27,21 @@ import {AccountEndpoint} from './services/account-endpoint.service';
 import {AccountService} from './services/account.service';
 import {CustomerEndpoint} from './services/customer-endpoint.service';
 import {CustomerService} from './services/customer.service';
+import {MailerService} from './services/mailer.service';
+import {MenuItemService} from './services/menu-item.service';
+import {ConfirmDialogComponent} from './shared/dialogs/confirm-dialog/confirm-dialog.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    StartComponent,
     WelcomeComponent,
-    DashboardComponent,
     LoginComponent,
     RegisterComponent,
     HomeComponent,
     NotFoundComponent,
-    HomeLayoutComponent
+    HomeLayoutComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     AppRouters,
@@ -49,7 +50,11 @@ import {CustomerService} from './services/customer.service';
     BrowserAnimationsModule,
     SharedModule,
     FlexLayoutModule,
+    ChartsModule,
     ToastaModule.forRoot(),
+  ],
+  entryComponents: [
+    ConfirmDialogComponent
   ],
   providers: [
     AuthGuard,
@@ -57,14 +62,15 @@ import {CustomerService} from './services/customer.service';
     AuthenticationService,
     ConfigurationService,
     LocalStoreManager,
-    BackendService,
+    MailerService,
     PagerService,
     EndpointFactory,
     AlertService,
     AccountEndpoint,
     AccountService,
     CustomerEndpoint,
-    CustomerService
+    CustomerService,
+    MenuItemService
   ],
   bootstrap: [AppComponent]
 })

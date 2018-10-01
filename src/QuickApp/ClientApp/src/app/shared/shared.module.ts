@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialComponentsModule } from './material-components/material-components.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {DateFormatPipe} from './pipes/date-format-pipe.component';
+import {ChartsModule} from 'ng2-charts';
 
 
 @NgModule({
@@ -9,14 +11,19 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     CommonModule,
     MaterialComponentsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule
   ],
-  declarations: [],
+  declarations: [
+    DateFormatPipe
+  ],
   exports: [
     MaterialComponentsModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DateFormatPipe,
+    ChartsModule
   ],
   providers: [
 

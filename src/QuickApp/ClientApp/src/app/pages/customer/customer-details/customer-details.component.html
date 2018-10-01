@@ -1,0 +1,35 @@
+<mat-toolbar class="mat-elevation-z4" style='margin-top: 0px; background-color: #ececec;'>
+  <h2>User details</h2>
+  <span class="example-fill-remaining-space"></span>
+  <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+  <div class="button-row tool-button-spacer">
+    <button mat-mini-fab class="tool-button" color="primary" [routerLink]="'/admin/users'" matTooltip="Back to list" matTooltipPosition="left">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<mat-tab-group class="mat-elevation-z4">
+  <mat-tab label="Overview">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title><h2>Details</h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <mat-form-field>
+            <input matInput placeholder="id" [ngModel]="dataView.id" name="id" [disabled]='true' >
+          </mat-form-field>
+         <mat-form-field>
+            <input matInput placeholder="userName" [(ngModel)]="dataView.userName" name="userName" [disabled]='true' >
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="email"  [(ngModel)]="dataView.email" name="email" [disabled]='true' >
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="friendlyName"  [(ngModel)]="dataView.friendlyName" name="friendlyName" [disabled]='true' >
+          </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>
+

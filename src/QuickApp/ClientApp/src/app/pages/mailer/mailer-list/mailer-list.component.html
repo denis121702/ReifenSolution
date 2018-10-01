@@ -1,0 +1,102 @@
+
+<mat-toolbar class="mat-elevation-z4" style="margin-top: 0px; background-color: #ececec;">
+  <span>Mailer</span>
+  <span class="example-fill-remaining-space"></span>
+  <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+  <div class="button-row tool-button-spacer">
+    <button mat-mini-fab class="tool-button"(click)="checkSendMailStatus()" matTooltip="Run Send-Email">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-icon-button class="tool-button" (click)="ngOnInit()" matTooltip="Refresh">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<div style="padding: 12px 8px;" class="mat-elevation-z4">
+
+  <mat-table #table [dataSource]="dataSource" matSort [matSortDisableClear]="true">
+    <ng-container matColumnDef="timestamp">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Create <br/> date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> <a class="link" [routerLink]="'details/' + row._id">{{row.timestamp | DateFormatPipe }}</a> </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="label">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Label </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.label}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="successCustomersCount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Emails <br/> success </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.successCustomersCount}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="failureCustomersCount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Emails <br/> failed </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.failureCustomersCount}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="questionsCount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Number <br/> of questions </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.questionsCount}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="votesCount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Number <br/> of feedback </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.votesCount}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="npsValue">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> NPS </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.npsValue}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="responseRateValue">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Response <br/> Rate (%) </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.responseRateValue}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tokenExpiresDays">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Token <br/> valid (days) </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.tokenExpiresDays}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef class="action-cell"> </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="action-cell">
+        <button mat-icon-button  [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="'details/' + row._id">
+            <mat-icon>mode_edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="startExportJob(row._id)">
+            <mat-icon>import_export</mat-icon>
+            <span>Export</span>
+          </button>
+          <button mat-menu-item (click)="openDeleteDialog(row._id)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+                 [length]="count"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>

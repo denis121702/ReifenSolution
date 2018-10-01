@@ -1,0 +1,60 @@
+mat-toolbar {
+  position: relative;
+  max-height: 48px;
+  z-index: 10;
+}
+
+.mat-toolbar-row {
+  justify-content: space-between;
+  height: 48px;
+}
+
+mat-sidenav-container {
+  height: 100%;
+  background-color: #fff;
+  color: #3c3c3c;
+  z-index: 1;
+}
+
+mat-sidenav {
+  width: 240px;
+}
+
+.main-content {
+  height: calc(100% - 48px);
+}
+.app-content {
+  padding: 0px 12px 8px 12px;
+  color: #636363;
+}
+
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+}
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-list .mat-list-item, .mat-nav-list .mat-list-item {
+  color: #636363;
+}
+
+.menu-item-label {
+  padding-top: 4px;
+  padding-left: 12px;
+}
+
+.menu-header {
+  margin-bottom: 12px;
+}
+
+.account-info {
+  font-size: 14px;
+}
