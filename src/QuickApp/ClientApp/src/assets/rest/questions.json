@@ -1,0 +1,71 @@
+{
+  "totalCount":4,
+  "data":[
+    {
+      "_id":"5a37922ff88b8242ece78bf1",
+      "title":"NPS",
+      "description":"Wie wahrscheinlich ist es, dass Sie ACE Stoßdämpfer an Ihre Arbeits- oder Fachkollegen weiterempfehlen?",
+      "status":"test",
+      "rating":10,
+      "isActive":true,
+      "__v":0,
+      "customerVotes":[
+
+      ],
+      "sort":1,
+      "votes":[
+
+      ],
+      "lastChange":"2018-03-23T15:15:52.507Z",
+      "timestamp":"2017-12-18T10:02:23.283Z"
+    },
+    {
+      "_id":"5a3a79c11267fe0017cf43fd",
+      "title":"Product",
+      "description":"Inwieweit decken sich die gelieferten Produkte mit der von uns versprochenen Leistung? ",
+      "status":"",
+      "rating":10,
+      "isActive":true,
+      "customerVotes":[
+
+      ],
+      "__v":0,
+      "sort":2,
+      "votes":[
+
+      ],
+      "lastChange":"2018-03-23T09:27:33.572Z",
+      "timestamp":"2017-12-20T14:54:26.585Z"
+    },
+    {
+      "_id":"5ab38ee2185c6f0017536bcb",
+      "title":"Information",
+      "description":"Wie zufrieden sind Sie mit der Verfügbarkeit und Verständlichkeit der Informationen zur Auswahl des geeigneten Produkts, sowie zur Installation und zur Dokumentation?",
+      "status":"",
+      "rating":10,
+      "sort":3,
+      "isActive":true,
+      "__v":0,
+      "votes":[
+
+      ],
+      "lastChange":"2018-03-22T11:09:22.255Z",
+      "timestamp":"2018-03-22T11:08:53.889Z"
+    },
+    {
+      "_id":"5ab38f1b185c6f0017536bcc",
+      "title":"Logistic",
+      "description":"Wie zufrieden sind Sie mit der Lieferleistung im Kontext Preis, Lieferzeit und Verpackung?",
+      "status":"",
+      "rating":10,
+      "sort":4,
+      "isActive":true,
+      "__v":0,
+      "votes":[
+
+      ],
+      "lastChange":"2018-03-22T11:10:19.456Z",
+      "timestamp":"2018-03-22T11:09:48.712Z"
+    }
+  ]
+}

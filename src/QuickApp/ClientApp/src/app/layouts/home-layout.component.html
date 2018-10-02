@@ -1,42 +1,7 @@
-<!--
-<mat-toolbar color="primary">
-  <span>
-    Test App
-  </span>
-  <span class="fill-remaining-space"></span>
-  <button [routerLink]="['/']" mat-button>Home</button>
-  <button [routerLink]="['/dashboard']" mat-button>Dashboard</button>
-  <button [routerLink]="'/admin/users'" mat-button>Users</button>
-  <button mat-button (click)="onLogout()">Logout</button>
-</mat-toolbar>
-
-<div class="main-content">
-  <mat-sidenav-container>
-    1111111111111111111111111
-    <mat-sidenav autosize #sidenav class="mat-elevation-z6 sidenav">
-        <div *ngFor="let entry of menuData" >
-          <h2>{{entry.name}}</h2>
-        </div>
-    </mat-sidenav>
-22222222222222222222222222
-    <div class="app-content">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-container>
-</div>
--->
-
-<!--mat-toolbar color="warn">
-  <mat-toolbar-row>
-    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" color="primary">
-      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-    </button>
-  </mat-toolbar-row>
-</mat-toolbar-->
-
 
 <mat-toolbar color="primary" class="top-bar">
-  <span><img src="/assets/images/logos/ACE-Logo.PNG" alt="System" class="brand-icon"></span>
+  <!--span><img src="/assets/images/logos/ACE-Logo.PNG" alt="System" class="brand-icon"></span-->
+  <span><img src="http://allreifen.de/images/allreifen_logo.png" alt="System" class="brand-icon"></span>
   <i>System</i>
   <span class="spacer"></span>
   <div class="user-avatar"

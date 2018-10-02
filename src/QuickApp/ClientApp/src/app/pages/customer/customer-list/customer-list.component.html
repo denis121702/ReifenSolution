@@ -1,5 +1,5 @@
 <mat-toolbar class="mat-elevation-z4" style='margin-top: 0px; background-color: #ececec;'>
-  <span>{{ActiveRouteName}}</span>
+  <span>Customers</span>
   <span class="example-fill-remaining-space"></span>
   <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
   <div class="button-row tool-button-spacer">
@@ -14,6 +14,27 @@
   <div class="table-filter">
     <mat-form-field floatPlaceholder="never">
       <input matInput #filter placeholder="Filter*">
+    </mat-form-field>
+    <span class="spacer"></span>
+    <mat-form-field>
+      <mat-select placeholder="Toppings" [formControl]="toppings" multiple>
+        <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Toppings" [formControl]="toppings" multiple>
+        <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker2" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
   </div>
 

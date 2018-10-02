@@ -1,0 +1,18 @@
+{
+  "_id":"5a37922ff88b8242ece78bf1",
+  "title":"NPS",
+  "description":"Wie wahrscheinlich ist es, dass Sie ACE Stoßdämpfer an Ihre Arbeits- oder Fachkollegen weiterempfehlen?",
+  "status":"test",
+  "rating":10,
+  "isActive":true,
+  "__v":0,
+  "customerVotes":[
+
+  ],
+  "sort":1,
+  "votes":[
+
+  ],
+  "lastChange":"2018-03-23T15:15:52.507Z",
+  "timestamp":"2017-12-18T10:02:23.283Z"
+}

@@ -1,0 +1,11 @@
+{
+  "_id":"5afec0e0e7ae0500b6192d97",
+  "timestamp":"2018-05-18T12:02:40.930Z",
+  "data":"Customer:kas@covis.de sendMailInfo: connect ECONNREFUSED 91.137.107.133:465",
+  "level":{
+    "colour":"green",
+    "levelStr":"INFO",
+    "level":20000
+  },
+  "category":"send-email"
+}

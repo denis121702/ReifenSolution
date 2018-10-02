@@ -1,0 +1,52 @@
+{
+  "_id":"5a37922ff88b8242ece78bf2",
+  "name":"Test",
+  "__v":0,
+  "unsubscribes":[
+    {
+      "_id":"5a3d148b7fce340bec4c447e",
+      "description":"",
+      "label":"Newsletter erscheint zu oft",
+      "value":1
+    },
+    {
+      "_id":"5a3d148b7fce340bec4c447d",
+      "description":"",
+      "label":"Newsletter erscheint zu selten",
+      "value":2
+    },
+    {
+      "_id":"5a3d148b7fce340bec4c447c",
+      "description":"",
+      "label":"Die Inhalte interessieren mich nicht mehr.",
+      "value":3
+    },
+    {
+      "_id":"5a3d148b7fce340bec4c447b",
+      "description":"",
+      "label":"Ich vermisse Informationen zu oft.",
+      "value":4
+    }
+  ],
+  "owncloud":{
+    "exportFolderName":"Export",
+    "successFolderName":"SuccessFolder",
+    "searchFolder":"Import",
+    "fileName":"",
+    "url":"https://cloud.ace-int.eu/nextcloud/",
+    "password":"ACE_2017.web",
+    "username":"nps"
+  },
+  "email":{
+    "tokenExpires":10,
+    "unsubscribe":"https://nps.cloud.lan/unsubscribe/",
+    "hyperlink":"https://survey.ace-int.eu/votes/",
+    "from":"survey@ace-int.eu",
+    "port":"465",
+    "host":"m5.ace-int.eu",
+    "auth":{
+      "pass":"ACE_2017.web",
+      "user":"nps"
+    }
+  }
+}

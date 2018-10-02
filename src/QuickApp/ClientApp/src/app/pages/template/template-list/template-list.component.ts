@@ -1,37 +1,27 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {MatDialog, MatPaginator, MatSnackBar, MatSort} from '@angular/material';
-import {Observable} from 'rxjs/rx';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {FormControl} from '@angular/forms';
+import {BehaviorSubject, Observable} from 'rxjs/rx';
 
 import {TableDataSource} from '../../../services/tableDataSource';
-import {CustomerService} from '../../../services/customer.service';
 import {PageRequest} from '../../../models/common/page-request';
+import {TemplateService} from '../../../services/template.service';
 import {DialogMessage} from '../../../shared/dialogs/confirm-dialog/dialog-message';
 import {ConfirmDialogComponent} from '../../../shared/dialogs/confirm-dialog/confirm-dialog.component';
-import {AuthGuard} from '../../../services/auth-guard.service';
 
 @Component({
-  selector: 'app-customer-list',
-  templateUrl: './customer-list.component.html',
-  styleUrls: ['./customer-list.component.scss']
+  selector: 'app-template-list',
+  templateUrl: './template-list.component.html',
+  styleUrls: ['./template-list.component.scss']
 })
 
-export class CustomerListComponent implements OnInit {
-
-  toppings = new FormControl();
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+export class TemplateListComponent implements OnInit {
 
   displayedColumns = [
-    'actions',
-    'customerId',
-    'contactId',
-    'firmenname',
-    'anrede',
-    'vorname',
-    'nachname',
-    'email',
-    'sendMailStatus'
+    'timestamp',
+    'subject',
+    // 'language',
+    // 'isActive',
+    // 'actions'
   ];
 
   dataSource: TableDataSource | null;
@@ -45,9 +35,8 @@ export class CustomerListComponent implements OnInit {
   resourceSelector: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   filterChange = new BehaviorSubject('');
 
-  constructor(public customerService: CustomerService,
+  constructor(public templateService: TemplateService,
               public dialog: MatDialog,
-              public authGuard: AuthGuard,
               public snackBar: MatSnackBar) {
   }
 
@@ -62,30 +51,34 @@ export class CustomerListComponent implements OnInit {
     Observable.merge(
       this.paginator.page,
       this.filterChange,
-      this.sort.sortChange).subscribe(customers => {
-      const pageRequest = new PageRequest();
-      pageRequest.startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-      pageRequest.pageSize = this.paginator.pageSize;
-      pageRequest.sortActive = this.sort.active;
-      pageRequest.sortDirection = this.sort.direction;
-      pageRequest.filter = this.filterChange.value.toLowerCase();
+      this.sort.sortChange).subscribe(result => {
+        const pageRequest = new PageRequest();
+        pageRequest.startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+        pageRequest.pageSize = this.paginator.pageSize;
+        pageRequest.sortActive = this.sort.active;
+        pageRequest.sortDirection = this.sort.direction;
+        pageRequest.filter = this.filterChange.value.toLowerCase();
 
-      this.customerService.searchCustomers(pageRequest).subscribe(res => {
-        if (res && res.data) {
-          this.count = res.totalCount;
-          this.resourceSelector.next(res.data as any);
-        }
-      }, error => this.errorMessage = <any>error);
-
-    }, error => this.errorMessage = <any>error);
+        this.templateService.searchTemplates(pageRequest).subscribe(res => {
+          if (res && res.data) {
+            this.count = res.totalCount;
+            this.resourceSelector.next(res.data as any);
+          }
+        }, error => this.errorMessage = <any>error);
+      },
+      error => this.errorMessage = <any>error);
 
     this.dataSource = new TableDataSource(this.resourceSelector);
   }
 
+  load() {
+    this.paginator._changePageSize(this.paginator.pageSize);
+  }
+
   openDeleteDialog(_id: string): void {
     const msg: DialogMessage = {
-      title: 'Delete customer',
-      message: 'The customer will be deleted?',
+      title: 'Delete e-mail template',
+      message: 'The e-mail template will be deleted?',
       confirmText: 'Delete',
       export: false
     };
@@ -104,16 +97,4 @@ export class CustomerListComponent implements OnInit {
       duration: 3000,
     });
   }
-
-  onTabChange(event) {
-    console.log('tab changed', event);
-  }
-
-  onPage(event) {}
-  onSort(event) {}
-  load() {}
-  search() {}
-  resetSearch() {}
 }
-
-

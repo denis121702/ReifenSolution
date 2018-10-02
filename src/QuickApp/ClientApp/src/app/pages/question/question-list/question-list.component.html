@@ -1,0 +1,79 @@
+
+<mat-toolbar class="mat-elevation-z4" style="margin-top: 0px; background-color: #ececec;">
+  <span>Questions</span>
+  <span class="example-fill-remaining-space"></span>
+  <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+  <div class="button-row tool-button-spacer">
+    <button mat-mini-fab class="tool-button" [routerLink]="['details/', '']" matTooltip="Add">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="tool-button-spacer"></div>
+    <button mat-icon-button class="tool-button" (click)="load()" matTooltip="Refresh">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<div style="padding: 12px 8px;" class="mat-elevation-z4">
+  <div class="table-filter">
+    <mat-form-field floatPlaceholder="never">
+      <input matInput #filter placeholder="Filter*">
+    </mat-form-field>
+  </div>
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="timestamp">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Create date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> <a class="link" [routerLink]="'details/' + row._id">{{row.timestamp | DateFormatPipe }}</a> </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell class="customWidthClass" *matHeaderCellDef mat-sort-header> Title* </mat-header-cell>
+      <mat-cell class="customWidthClass" *matCellDef="let row"> {{row.title}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="sort">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Sort </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.sort}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isActive">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Active  </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.isActive ? 'yes' : 'no' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastChange">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Last changed date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.lastChange | DateFormatPipe }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef class="action-cell"> </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="action-cell">
+        <button mat-icon-button  [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="'details/' + row._id">
+            <mat-icon>mode_edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="openDeleteDialog(row._id)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+                 [length]="count"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>

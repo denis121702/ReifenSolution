@@ -1,0 +1,74 @@
+
+<mat-toolbar class="mat-elevation-z4" style="margin-top: 0px; background-color: #ececec;">
+  <h2>Edit mail template</h2>
+  <span class="example-fill-remaining-space"></span>
+  <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+  <div class="button-row tool-button-spacer">
+    <button mat-icon-button class="tool-button" *ngIf="!edit"(click)="editEntry();" matTooltip="Edit">
+      <mat-icon >mode_edit</mat-icon>
+    </button>
+    <div class="tool-button-spacer"></div>
+    <button mat-mini-fab class="tool-button" color="primary" [routerLink]="'/templates'" matTooltip="Back to list" matTooltipPosition="left">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<mat-tab-group class="mat-elevation-z4">
+  <mat-tab label="Overview">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title><h2>Details</h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content >
+        <mat-form-field>
+          <input matInput placeholder="ID" [ngModel]="dataView._id" name="styleNo" [disabled]='true' >
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Create date" value="{{dataView.timestamp | DateFormatPipe }}" name="timestamp" length="50" [disabled]="true">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last changes at" value="{{dataView.timestamp | DateFormatPipe }}" name="lastChange" length="50" [disabled]="true">
+        </mat-form-field>
+        <!--mat-form-field>
+          <input matInput placeholder="Sprache"  [(ngModel)]="dataView.language" name="Language" [disabled]='!edit' >
+        </mat-form-field-->
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Subject"  [(ngModel)]="dataView.subject" name="subject" [disabled]='!edit' >
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <textarea matInput
+                    placeholder="Html"
+                    [(ngModel)]="dataView.html"
+                    name="Html"
+                    [disabled]='!edit'
+                    matTextareaAutosize
+                    matAutosizeMinRows="20"
+                    matAutosizeMaxRows="30"></textarea>
+        </mat-form-field>
+        <!--<mat-form-field class="example-full-width">
+          <textarea matInput
+                    placeholder="Text"
+                    [(ngModel)]="dataView.text"
+                    name="Text"
+                    [disabled]='!edit'
+                    matTextareaAutosize
+                    matAutosizeMinRows="12"
+                    matAutosizeMaxRows="30"></textarea>
+        </mat-form-field>-->
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button  [disabled]="!edit" (click)="cancelEntry();" matTooltip="Cancel Edit">
+          Cancel
+        </button>
+        <button mat-raised-button color="primary"
+                class="tool-button"
+                [disabled]="!edit || dataView.description === '' || dataView.language === ''"
+                (click)="saveEntry();"
+                matTooltip="Save">
+          Save
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>

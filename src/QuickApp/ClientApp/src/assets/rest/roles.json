@@ -1,0 +1,19 @@
+{
+  "totalCount":2,
+  "data":[
+    {
+      "_id":"5a37d3780a36a500111dea10",
+      "description":"Der Default-User hat keine Admin-Berechtigungen. \nMenüs somit nur \"Main\" & \"Mailings & Statistics\", aber nicht \"Administration\".",
+      "name":"Default-User",
+      "__v":0,
+      "timestamp":"2017-12-18T13:50:17.559Z"
+    },
+    {
+      "_id":"5a3123e8ab56883adc96a76d",
+      "name":"Administrator",
+      "description":"Benutzer mit allen Rechten und Menüzugängen",
+      "__v":0,
+      "timestamp":"2017-12-18T10:02:23.257Z"
+    }
+  ]
+}

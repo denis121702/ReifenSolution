@@ -1,0 +1,10 @@
+{
+  "_id":"5a37922ff88b8242ece78bf0",
+  "subject":"Umfrage zur Kundenzufriedenheit ",
+  "html":"<font face=\"Calibri\">\n<font color=#000000>\n\nGuten Tag {anrede} {nachname},<br/>\n<br/>\n\nSie sind herzlich eingeladen, an der kurzen Befragung (1-4 Fragen) zur Bewertung unserer Kundenzufriedenheit teilzunehmen.<br/>\nDa wir bestrebt sind, uns für Sie kontinuierlich zu verbessern, ist Ihre Meinung für uns sehr wichtig. Ihre Antworten werden uns <br/>\nhelfen, die Produkte in Zukunft besser an den Bedürfnissen und Wünschen unserer Kunden auszurichten.<br/>\n<br/>\n\nWir möchten Sie noch auf Folgendes hinweisen: <br/>\n<br/>\n\nNachdem Sie die erste Frage erfolgreich beantwortet haben, gilt Ihre Umfrage bereits als abgeschlossen. Sie können Ihre Umfrage also nicht erneut aufrufen.<br/>\n<br/>\n\nÜber den folgenden Link gelangen Sie zur Umfrage: <a href={hyperlink}>{hyperlink}</a><br/>\n<br/>\n\nWir bedanken uns für Ihre Unterstützung. <br/>\n<br/>\n\nMit freundlichen Grüßen<br/>\n<br/>\n\n<b>ACE Stoßdämpfer GmbH</b><br/>\n\n<img src=\"http://www.ace-ace.de/skin/frontend/ace/default/images/logo-ace.png\" alt=\"ACE-Logo\" />\n\n</font>\n\n<br/>\n<br/>\n\n",
+  "text":"Sehr geehrte/r  {anrede} {nachname}, Mit freundlichen Grüßen, ACE GmbH 2222",
+  "language":"de-DE",
+  "isActive":true,
+  "__v":0,
+  "timestamp":"2017-12-18T10:02:23.287Z"
+}

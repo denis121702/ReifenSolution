@@ -30,7 +30,11 @@ import {CustomerService} from './services/customer.service';
 import {MailerService} from './services/mailer.service';
 import {MenuItemService} from './services/menu-item.service';
 import {ConfirmDialogComponent} from './shared/dialogs/confirm-dialog/confirm-dialog.component';
-
+import {QuestionService} from './services/question.service';
+import {TemplateService} from './services/template.service';
+import {SettingsService} from './services/settings.service';
+import {RoleService} from './services/role.service';
+import {LogService} from './services/log.service';
 
 @NgModule({
   declarations: [
@@ -70,7 +74,12 @@ import {ConfirmDialogComponent} from './shared/dialogs/confirm-dialog/confirm-di
     AccountService,
     CustomerEndpoint,
     CustomerService,
-    MenuItemService
+    MenuItemService,
+    QuestionService,
+    TemplateService,
+    SettingsService,
+    RoleService,
+    LogService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,115 @@
+{
+  "totalCount":1422,
+  "data":[
+    {
+      "_id":"5bb20a63d1a259001b9214e2",
+      "timestamp":"2018-10-01T11:52:03.437Z",
+      "data":"Start: checkSendMailStatus",
+      "level":{
+        "colour":"green",
+        "levelStr":"INFO",
+        "level":20000
+      },
+      "category":"process.controller"
+    },
+    {
+      "_id":"5afec0e0e7ae0500b6192d9d",
+      "timestamp":"2018-05-18T12:02:40.956Z",
+      "data":"Process Exit.",
+      "level":{
+        "colour":"green",
+        "levelStr":"INFO",
+        "level":20000
+      },
+      "category":"send-email"
+    },
+    {
+      "_id":"5afec0e0e7ae0500b6192d9b",
+      "timestamp":"2018-05-18T12:02:40.955Z",
+      "data":"save new Mailer",
+      "level":{
+        "colour":"green",
+        "levelStr":"INFO",
+        "level":20000
+      },
+      "category":"send-email"
+    },
+    {
+      "_id":"5afec0e0e7ae0500b6192d9c",
+      "timestamp":"2018-05-18T12:02:40.955Z",
+      "data":"close transporter",
+      "level":{
+        "colour":"green",
+        "levelStr":"INFO",
+        "level":20000
+      },
+      "category":"send-email"
+    },
+    {
+      "_id":"5afec0e0e7ae0500b6192d99",
+      "timestamp":"2018-05-18T12:02:40.942Z",
+      "data":"Everything is done return back to caller",
+      "level":{
+        "colour":"green",
+        "levelStr":"INFO",
+        "level":20000
+      },
+      "category":"send-email"
+    },
+    {
+      "_id":"5afec0e0e7ae0500b6192d98",
+      "timestamp":"2018-05-18T12:02:40.941Z",
+      "data":"Will update DB here for kas@covis.de",
+      "level":{
+        "colour":"green",
+        "levelStr":"INFO",
+        "level":20000
+      },
+      "category":"send-email"
+    },
+    {
+      "_id":"5afec0e0e7ae0500b6192d96",
+      "timestamp":"2018-05-18T12:02:40.930Z",
+      "data":"Customer:kas@covis.de sendMailStatus: false",
+      "level":{
+        "colour":"green",
+        "levelStr":"INFO",
+        "level":20000
+      },
+      "category":"send-email"
+    },
+    {
+      "_id":"5afec0e0e7ae0500b6192d97",
+      "timestamp":"2018-05-18T12:02:40.930Z",
+      "data":"Customer:kas@covis.de sendMailInfo: connect ECONNREFUSED 91.137.107.133:465",
+      "level":{
+        "colour":"green",
+        "levelStr":"INFO",
+        "level":20000
+      },
+      "category":"send-email"
+    },
+    {
+      "_id":"5afec0e0e7ae0500b6192d95",
+      "timestamp":"2018-05-18T12:02:40.929Z",
+      "data":"connect ECONNREFUSED 91.137.107.133:465",
+      "level":{
+        "colour":"red",
+        "levelStr":"ERROR",
+        "level":40000
+      },
+      "category":"send-email"
+    },
+    {
+      "_id":"5afec0e0e7ae0500b6192d94",
+      "timestamp":"2018-05-18T12:02:40.898Z",
+      "data":"Sending email to kas@covis.de",
+      "level":{
+        "colour":"green",
+        "levelStr":"INFO",
+        "level":20000
+      },
+      "category":"send-email"
+    }
+  ]
+}

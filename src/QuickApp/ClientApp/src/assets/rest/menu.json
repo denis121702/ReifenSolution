@@ -1,1 +1,13 @@
-[{"sort":110,"items":[{"name":"Dashboard","icon":"dashboard","route":"home","sort":110,"roles":["5a37d3780a36a500111dea10","5a3123e8ab56883adc96a76d"]},{"name":"Mailings & Statistics","icon":"send","route":"mailers","sort":120,"roles":["5a3123e8ab56883adc96a76d"]},{"name":"Customer","icon":"people","route":"customers","sort":130,"roles":["5a3123e8ab56883adc96a76d"]},{"name":"Import","icon":"import_export","route":"imports","sort":140,"roles":["5a3123e8ab56883adc96a76d"]},{"name":"Questions","icon":"question_answer","route":"questions","sort":150,"roles":["5a3123e8ab56883adc96a76d"]},{"name":"Mail Template","icon":"drafts","route":"templates","sort":160,"roles":["5a3123e8ab56883adc96a76d"]}],"name":"Main"},{"sort":210,"items":[{"name":"Users","icon":"person","route":"admin/users","sort":210,"roles":["5a3123e8ab56883adc96a76d"]},{"name":"Settings","icon":"settings","route":"admin/settings","sort":220,"roles":["5a3123e8ab56883adc96a76d"]},{"name":"Roles","icon":"supervisor_account","route":"admin/roles","sort":230,"roles":["5a3123e8ab56883adc96a76d"]},{"name":"MenuItems","icon":"menu","route":"admin/menuitems","sort":240,"roles":["5a3123e8ab56883adc96a76d"]},{"name":"Logs","icon":"dialpad","route":"admin/logs","sort":250,"roles":["5a3123e8ab56883adc96a76d"]}],"name":"Administration"}]
+{
+  "_id":"5a3d054a169ce53264367334",
+  "name":"Mailings & Statistics",
+  "category":"Main",
+  "icon":"send",
+  "route":"mailers",
+  "sort":120,
+  "__v":0,
+  "roles":[
+    "5a3123e8ab56883adc96a76d"
+  ],
+  "timestamp":"2017-12-22T13:14:50.225Z"
+}
