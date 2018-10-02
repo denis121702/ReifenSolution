@@ -15,7 +15,7 @@ export class CustomerDetailsComponent implements OnInit {
 
   errorMessage: string;
   id: string;
-  private dataView: User = new User();
+  dataView: User = new User();
 
   constructor(private route: ActivatedRoute,
               private accountService: AccountService,

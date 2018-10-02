@@ -11,7 +11,7 @@ export class User {
         this.roles = roles;
     }
 
-    get friendlyName(): string {
+  /*  get friendlyName(): string {
         let name = this.fullName || this.userName;
 
         if (this.jobTitle) {
@@ -19,7 +19,7 @@ export class User {
         }
 
         return name;
-    }
+    }*/
 
     public id: string;
     public userName: string;
