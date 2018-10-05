@@ -25,7 +25,6 @@ import {AuthService} from './services/auth.service';
 import {HomeLayoutComponent} from './layouts/home-layout.component';
 import {AccountEndpoint} from './services/account-endpoint.service';
 import {AccountService} from './services/account.service';
-import {CustomerEndpoint} from './services/customer-endpoint.service';
 import {CustomerService} from './services/customer.service';
 import {MailerService} from './services/mailer.service';
 import {MenuItemService} from './services/menu-item.service';
@@ -72,7 +71,6 @@ import {LogService} from './services/log.service';
     AlertService,
     AccountEndpoint,
     AccountService,
-    CustomerEndpoint,
     CustomerService,
     MenuItemService,
     QuestionService,

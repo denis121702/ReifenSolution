@@ -15,9 +15,9 @@
     {
         public AutoMapperProfile()
         {
-            CreateMap<PageResponseViewData, PageRequest>();
+            CreateMap<PageRequestViewData, PageRequest>();
 
-            CreateMap<PageRequest, PageResponseViewData>();
+            CreateMap<PageResponse<Customer>, PageResponseViewData>();
 
             CreateMap<ApplicationUser, UserViewModel>()
                    .ForMember(d => d.Roles, map => map.Ignore());

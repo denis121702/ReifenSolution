@@ -36,18 +36,18 @@
             _logger.LogInformation("Calling CustomerControlle: GetCustomers");
 
             var pageRequest = Mapper.Map<PageRequest>(pageRequestViewData);
-            
-            TransactionalInformation transaction = new TransactionalInformation();
-            
-            var pageResponse = await _unitOfWork.Customers.GetCustomers(pageRequest, transaction);
-            if (transaction.ReturnStatus == false)
-            {
-                return BadRequest("Please check your imput parametrs");                
-            }
+
+            //TransactionalInformation transaction = new TransactionalInformation();
+
+            var pageResponse = _unitOfWork.Customers.GetCustomers(pageRequest);
+            //if (transaction.ReturnStatus == false)
+            //{
+            //    return BadRequest("Please check your imput parametrs");                
+            //}
 
             var pageResponseViewData = Mapper.Map<PageResponseViewData>(pageResponse);                        
 
-            return Ok(pageResponseViewData);
+            return Ok(await Task.FromResult(pageResponse));
         }
 
 

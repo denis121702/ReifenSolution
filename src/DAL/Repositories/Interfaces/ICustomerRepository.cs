@@ -10,6 +10,6 @@
 
         IEnumerable<Customer> GetAllCustomersData();
 
-        Task<PageResponse> GetCustomers(PageRequest pageRequest, TransactionalInformation transaction);
+        PageResponse<Customer> GetCustomers(PageRequest pageRequest);
     }
 }

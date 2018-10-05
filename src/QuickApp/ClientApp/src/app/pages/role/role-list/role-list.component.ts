@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs/rx';
 import {MatDialog, MatPaginator, MatSnackBar, MatSort} from '@angular/material';
-
+import {Observable} from 'rxjs/Rx';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {PageRequest} from '../../../models/common/page-request';
 import {TableDataSource} from '../../../services/tableDataSource';
 import {RoleService} from '../../../services/role.service';

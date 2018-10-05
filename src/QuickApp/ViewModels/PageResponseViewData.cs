@@ -4,8 +4,8 @@
 
     public class PageResponseViewData
     {
-        public IEnumerable<CustomerViewModel> data { get; set; }
+        public IEnumerable<CustomerViewModel> Data { get; set; }
 
-        public int totalCount { get; set; }
+        public int TotalCount { get; set; }
     }
 }

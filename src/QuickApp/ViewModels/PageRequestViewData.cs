@@ -5,12 +5,10 @@ namespace QuickApp.ViewModels
 {
     [Serializable]
     public class PageRequestViewData
-    {
-        [Required]
-        public int startIndex { get; set; }
-
-        [Required]
-        public int pageSize { get; set; }
+    {        
+        public int? startIndex { get; set; }
+     
+        public int? pageSize { get; set; }
 
         public string sortActive { get; set; }
 

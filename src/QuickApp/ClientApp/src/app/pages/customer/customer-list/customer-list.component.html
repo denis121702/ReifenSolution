@@ -15,34 +15,56 @@
     <mat-form-field floatPlaceholder="never">
       <input matInput #filter placeholder="Filter*">
     </mat-form-field>
-    <span class="spacer"></span>
+  </div>
+  <div class="table-filter">
     <mat-form-field>
-      <mat-select placeholder="Toppings" [formControl]="toppings" multiple>
+      <mat-select placeholder="Saison" [formControl]="toppings" multiple>
         <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="Toppings" [formControl]="toppings" multiple>
+      <mat-select placeholder="Marke" [formControl]="toppings" multiple>
         <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+      <mat-select placeholder="Model" [formControl]="toppings" multiple>
+        <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Breite" [formControl]="toppings" multiple>
+        <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Höhe" [formControl]="toppings" multiple>
+        <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Größe" [formControl]="toppings" multiple>
+        <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Angemeldet von">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [matDatepicker]="picker2" placeholder="Choose a date">
+      <input matInput [matDatepicker]="picker2" placeholder="Angemeldet bis">
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
   </div>
 
+
   <mat-table #table [dataSource]="dataSource" matSort>
     <!-- ID Column -->
     <ng-container matColumnDef="customerId">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Customer-ID* </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.customerId}} </mat-cell>
+      <mat-cell *matCellDef="let row"> <a class="link" [routerLink]="'details/' + row.id">{{row.id }}</a> </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="contactId">

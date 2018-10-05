@@ -1,30 +1,25 @@
-import { Injectable } from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
-import {Observable, throwError} from 'rxjs';
 
 import {PageRequest} from '../models/common/page-request';
-import {PageResponse} from '../models/common/page-response';
 import {ConfigurationService} from './configuration.service';
+import {EndpointFactory} from './endpoint-factory.service';
+import {PageResponse} from '../models/common/page-response';
 
 @Injectable()
-export class CustomerService {
+export class CustomerService  extends EndpointFactory {
 
-  private get searchCustomersUrl() { return this.configurations.baseUrl + '/assets/rest/customers.json'; }
+  private get searchCustomersUrl() { return this.configurations.baseUrl + '/api/customer/getcustomers'; }
 
-  constructor(public http: HttpClient, protected configurations: ConfigurationService) {
+  constructor(http: HttpClient, configurations: ConfigurationService, injector: Injector) {
+    super(http, configurations, injector);
   }
 
-/*  constructor(private router: Router,
-              private http: HttpClient,
-              private customerEndpoint: CustomerEndpoint) {
-  }*/
-
   searchCustomers(variables: PageRequest) {
-    /*return this.customerEndpoint.getCustomers<PageResponse>(variables);*/
-    return this.http.get<PageResponse>(this.searchCustomersUrl)
-      .pipe(
-        catchError(e => throwError(e))
-      );
+    return this.http.post<PageResponse>(this.searchCustomersUrl, variables, this.getRequestHeaders()).pipe<PageResponse>(
+      catchError(error => {
+        return this.handleError(error, () => this.searchCustomers(variables));
+      }));
   }
 }

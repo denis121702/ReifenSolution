@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Observable} from 'rxjs/rx';
+import {Observable} from 'rxjs/Rx';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 import {IMailer} from '../../../models/mailer';

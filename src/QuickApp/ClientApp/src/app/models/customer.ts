@@ -1,9 +1,9 @@
 /* Defines the customer entity */
 export interface ICustomer {
-    _id: string;
-    customerId: string;
-    firmenname: string;
-    contactId: string;
+    id: string;
+    Name: string;
+    Email: string;
+    PhoneNumber: string;
     anrede: string;
     vorname: string;
     nachname: string;

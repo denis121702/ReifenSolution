@@ -1,8 +1,26 @@
 import {Component, OnInit} from '@angular/core';
+
 import {PageRequest} from '../../models/common/page-request';
 import {MailerService} from '../../services/mailer.service';
 import {IMailer} from '../../models/mailer';
 import {BarChartLabels, LineChartLabels, SplitChartLabels} from '../../constants/chart-labels';
+import {MatTableDataSource} from '@angular/material';
+
+export interface Element {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+
+const ELEMENT_DATA: Element[] = [
+  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+  {position: 5, name: 'Beryllium123', weight: 9.0122, symbol: 'Be'}
+];
+
 
 @Component({
   selector: 'app-home',
@@ -11,6 +29,9 @@ import {BarChartLabels, LineChartLabels, SplitChartLabels} from '../../constants
 })
 
 export class HomeComponent implements OnInit  {
+
+  displayedColumns = ['position', 'name', 'weight', 'symbol'];
+  dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
 
   dataView: IMailer;
   errorMessage: string;
@@ -242,4 +263,5 @@ export class HomeComponent implements OnInit  {
       }
     }, error => this.errorMessage = <any>error);
   }
+
 }

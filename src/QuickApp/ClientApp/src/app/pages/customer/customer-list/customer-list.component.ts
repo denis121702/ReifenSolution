@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {MatDialog, MatPaginator, MatSnackBar, MatSort} from '@angular/material';
-import {Observable} from 'rxjs/rx';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Rx';
 import {FormControl} from '@angular/forms';
+import {MatDialog, MatPaginator, MatSnackBar, MatSort} from '@angular/material';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 import {TableDataSource} from '../../../services/tableDataSource';
 import {CustomerService} from '../../../services/customer.service';
@@ -10,6 +10,7 @@ import {PageRequest} from '../../../models/common/page-request';
 import {DialogMessage} from '../../../shared/dialogs/confirm-dialog/dialog-message';
 import {ConfirmDialogComponent} from '../../../shared/dialogs/confirm-dialog/confirm-dialog.component';
 import {AuthGuard} from '../../../services/auth-guard.service';
+import {PageResponse} from '../../../models/common/page-response';
 
 @Component({
   selector: 'app-customer-list',
@@ -70,7 +71,7 @@ export class CustomerListComponent implements OnInit {
       pageRequest.sortDirection = this.sort.direction;
       pageRequest.filter = this.filterChange.value.toLowerCase();
 
-      this.customerService.searchCustomers(pageRequest).subscribe(res => {
+      this.customerService.searchCustomers(pageRequest).subscribe( res => {
         if (res && res.data) {
           this.count = res.totalCount;
           this.resourceSelector.next(res.data as any);

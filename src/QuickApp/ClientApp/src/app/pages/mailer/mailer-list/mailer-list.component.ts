@@ -1,9 +1,9 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Observable} from 'rxjs/rx';
-import {MatPaginator, MatSort, MatSnackBar, MatDialog} from '@angular/material';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Observable} from 'rxjs/Rx';
+import {MatDialog, MatPaginator, MatSnackBar, MatSort} from '@angular/material';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 import {PageRequest} from '../../../models/common/page-request';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {TableDataSource} from '../../../services/tableDataSource';
 import {MailerService} from '../../../services/mailer.service';
 import {IMailer} from '../../../models/mailer';

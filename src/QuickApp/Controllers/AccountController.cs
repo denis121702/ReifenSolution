@@ -37,6 +37,26 @@ namespace QuickApp.Controllers
             _authorizationService = authorizationService;
         }
 
+        [HttpGet("users/{pageNumber:int}/{pageSize:int}")]
+        [Authorize(Authorization.Policies.ViewAllUsersPolicy)]
+        [ProducesResponseType(200, Type = typeof(List<UserViewModel>))]
+        public async Task<IActionResult> GetUsers(int pageNumber, int pageSize)
+        {
+            var usersAndRoles = await _accountManager.GetUsersAndRolesAsync(pageNumber, pageSize);
+
+            List<UserViewModel> usersVM = new List<UserViewModel>();
+
+            foreach (var item in usersAndRoles)
+            {
+                var userVM = Mapper.Map<UserViewModel>(item.Item1);
+                userVM.Roles = item.Item2;
+
+                usersVM.Add(userVM);
+            }
+
+            return Ok(usersVM);
+        }
+
 
         [HttpGet("users/me")]
         [ProducesResponseType(200, Type = typeof(UserViewModel))]
@@ -89,29 +109,7 @@ namespace QuickApp.Controllers
         public async Task<IActionResult> GetUsers()
         {
             return await GetUsers(-1, -1);
-        }
-
-
-        [HttpGet("users/{pageNumber:int}/{pageSize:int}")]
-        [Authorize(Authorization.Policies.ViewAllUsersPolicy)]
-        [ProducesResponseType(200, Type = typeof(List<UserViewModel>))]
-        public async Task<IActionResult> GetUsers(int pageNumber, int pageSize)
-        {
-            var usersAndRoles = await _accountManager.GetUsersAndRolesAsync(pageNumber, pageSize);
-
-            List<UserViewModel> usersVM = new List<UserViewModel>();
-
-            foreach (var item in usersAndRoles)
-            {
-                var userVM = Mapper.Map<UserViewModel>(item.Item1);
-                userVM.Roles = item.Item2;
-
-                usersVM.Add(userVM);
-            }
-
-            return Ok(usersVM);
-        }
-
+        }        
 
         [HttpPut("users/me")]
         [ProducesResponseType(204)]

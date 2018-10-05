@@ -2,12 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using System.Linq;    
     using Microsoft.EntityFrameworkCore;
     using DAL.Models;
     using DAL.Repositories.Interfaces;
     using System.Linq.Dynamic;
+    using System.Linq.Expressions;
 
     public class CustomerRepository : Repository<Customer>, ICustomerRepository
     {
@@ -30,46 +30,26 @@
                 .ToList();
         }
 
-        public Task<PageResponse> GetCustomers(PageRequest pageRequest, TransactionalInformation transaction)
+        public PageResponse<Customer> GetCustomers(PageRequest pageRequest)
         {
-            //transaction = new TransactionalInformation();           
-            
-            if (string.IsNullOrWhiteSpace(pageRequest.sortActive))
+            if(pageRequest == null)
             {
-                pageRequest.sortActive = "Name";
+                throw new ArgumentException("pageRequest");
             }
 
-            if (string.IsNullOrWhiteSpace(pageRequest.sortDirection))
-            {
-                pageRequest.sortDirection = "ASC";
-            }
-
-            var sortExpression = pageRequest.sortActive + " " + pageRequest.sortDirection;
-
-            var customerQuery = _appContext.Customers.AsQueryable();
-
-            //if (customerCode != null && customerCode.Trim().Length > 0)
-            //{
-            //    customerQuery = customerQuery.Where(c => c.CustomerCode.StartsWith(customerCode));
-            //}
+            var filterExpressions = new List<Expression<Func<Customer, bool>>>();
 
             if (!string.IsNullOrWhiteSpace(pageRequest.filter))
             {
-                customerQuery = customerQuery.Where(c => c.Name.StartsWith(pageRequest.filter));
+                filterExpressions.Add(x => x.Name.Contains(pageRequest.filter));
             }
 
-            //OrderBy(sortExpression).
-            var customers = customerQuery.Skip(pageRequest.startIndex * pageRequest.pageSize).Take(pageRequest.pageSize).ToList();
+            var triple = this.ListWithPaging(filterExpressions.ToArray(), 
+                pageRequest.startIndex, pageRequest.pageSize, pageRequest.sortActive, pageRequest.sortDirection);
+                                 
+            var pageResponse = new PageResponse<Customer>(triple.Item1, triple.Item2);
             
-            var pageResponse = new PageResponse
-            {
-                totalCount = customerQuery.Count(),
-                data = customers
-            };
-
-            transaction.ReturnStatus = true;
-
-            return Task.FromResult<PageResponse>(pageResponse);
+            return pageResponse;
         }
 
         private ApplicationDbContext _appContext => (ApplicationDbContext)_context;
