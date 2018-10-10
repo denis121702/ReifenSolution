@@ -18,25 +18,14 @@
             _context = context;
             _entities = context.Set<TEntity>();
         }
-
-   
+ 
         public Tuple<IEnumerable<TEntity>, int> ListWithPaging(
-            Expression<Func<TEntity, bool>>[] filterExpression = null,
-            int startIndex = 0,
-            int pageSize = 10,            
-            string sortActive = "Id",
-            string sortDirection = "ASC")
-        {
-            //var customerQuery = _appContext.Customers.AsQueryable();
-            IQueryable<TEntity> query = _entities;
-
-            foreach (var filter in filterExpression)
-            {
-                query = query.Where(filter);
-            }           
-
-            var count = query.Count();
-
+            Expression<Func<TEntity, bool>>[] filterExpression,
+            int? startIndex,
+            int? pageSize,            
+            string sortActive,
+            string sortDirection)
+        {            
             if (string.IsNullOrWhiteSpace(sortActive))
             {
                 sortActive = "Id";
@@ -45,16 +34,24 @@
             if (string.IsNullOrWhiteSpace(sortDirection))
             {
                 sortDirection = "ASC";
+            }          
+
+            IQueryable<TEntity> query = _entities;
+
+            foreach (var filter in filterExpression)
+            {
+                query = query.Where(filter);
             }
 
-            if (pageSize == 0)
-            {
-                pageSize = 10;
-            }
+            var count = query.Count();
 
             var sortExpression = sortActive + " " + sortDirection;
 
-            var customers = query.OrderBy(sortExpression).Skip(startIndex * pageSize).Take(pageSize).ToList();                        
+            var start = startIndex ?? 0;
+
+            var page = pageSize ?? 10;
+
+            var customers = query.OrderBy(sortExpression).Skip(start * page).Take(page).ToList();                        
 
             return new Tuple<IEnumerable<TEntity>, int>(customers, count);
         }

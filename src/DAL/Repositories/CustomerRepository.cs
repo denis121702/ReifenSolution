@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;    
-    using Microsoft.EntityFrameworkCore;
+    using System.Linq;
     using DAL.Models;
     using DAL.Repositories.Interfaces;
-    using System.Linq.Dynamic;
     using System.Linq.Expressions;
 
     public class CustomerRepository : Repository<Customer>, ICustomerRepository
@@ -21,11 +19,23 @@
         }
 
 
+        public void UpdateCustomer(Customer customer)
+        {
+            this.Update(customer);            
+        }
+
+        //public Customer GetCustomerById(int id)
+        //{
+        //    var customer = this.Get(id);
+
+        //    return customer;
+        //}
+
         public IEnumerable<Customer> GetAllCustomersData()
         {
             return _appContext.Customers
-                .Include(c => c.Orders).ThenInclude(o => o.OrderDetails).ThenInclude(d => d.Product)
-                .Include(c => c.Orders).ThenInclude(o => o.Cashier)
+                //.Include(c => c.Orders).ThenInclude(o => o.OrderDetails).ThenInclude(d => d.Product)
+                //.Include(c => c.Orders).ThenInclude(o => o.Cashier)
                 .OrderBy(c => c.Name)
                 .ToList();
         }
@@ -42,6 +52,7 @@
             if (!string.IsNullOrWhiteSpace(pageRequest.filter))
             {
                 filterExpressions.Add(x => x.Name.Contains(pageRequest.filter));
+                filterExpressions.Add(x => x.Vorname.Contains(pageRequest.filter));
             }
 
             var triple = this.ListWithPaging(filterExpressions.ToArray(), 
@@ -50,7 +61,7 @@
             var pageResponse = new PageResponse<Customer>(triple.Item1, triple.Item2);
             
             return pageResponse;
-        }
+        }   
 
         private ApplicationDbContext _appContext => (ApplicationDbContext)_context;
     }

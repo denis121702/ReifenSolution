@@ -1,17 +1,14 @@
 ﻿namespace QuickApp.Controllers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using DAL;
     using QuickApp.ViewModels;
     using AutoMapper;
-    using DAL.Models;
     using Microsoft.Extensions.Logging;
     using QuickApp.Helpers;
-    using Microsoft.Extensions.Options;
+    using DAL.Models;
 
     [Route("api/[controller]")]
     public class CustomerController : Controller
@@ -26,10 +23,92 @@
             _unitOfWork = unitOfWork;
             _logger = logger;
             _emailer = emailer;
+        }   
+
+        [HttpPost]        
+        [ProducesResponseType(201, Type = typeof(RoleViewModel))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateCustomer([FromBody] CustomerViewModel customerViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);                              
+            }
+
+            if (customerViewModel == null)
+            { 
+                return BadRequest($"{nameof(customerViewModel)} cannot be null");
+            }
+
+
+            var customer = Mapper.Map<Customer>(customerViewModel);
+
+            _unitOfWork.Customers.Add(customer);
+            _unitOfWork.SaveChanges();
+
+            return Ok(await Task.FromResult(customer.Id));
         }
 
 
-        [Route("GetCustomers")]
+        [HttpPut("{id}")]        
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateCustomer(int id, [FromBody] CustomerViewModel customerViewModel)
+        {
+            _logger.LogInformation("Calling CustomerControlle: UpdateCustomer: " + id);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);                
+            }
+
+            if (customerViewModel == null)
+            {
+                return BadRequest($"{nameof(customerViewModel)} cannot be null");
+            }
+
+            if (customerViewModel.Id != 0 && id != customerViewModel.Id)
+            {
+                return BadRequest("Conflicting Customer id in parameter and model data");
+            }
+
+            var customer = _unitOfWork.Customers.Get(id);
+            if (customer == null)
+            {
+                return NotFound(id);
+            }
+
+            Mapper.Map<CustomerViewModel, Customer>(customerViewModel, customer);
+
+            _unitOfWork.Customers.Update(customer);
+            _unitOfWork.SaveChanges();
+
+            return Ok(await Task.FromResult(id));
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(RoleViewModel))]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetCustomerById(int id)
+        {
+            _logger.LogInformation("Calling CustomerControlle: GetCustomerById: " + id);
+
+            var customer = _unitOfWork.Customers.Get(id);            
+            
+            if (customer == null)
+            { 
+                return NotFound(id);
+            }
+
+            return Ok(await Task.FromResult(customer));
+        }
+
+
+
+        [Route("search")]
+        [ProducesResponseType(200, Type = typeof(PageResponseViewData))]
         [HttpPost]
         public async Task<IActionResult> GetCustomers([FromBody] PageRequestViewData pageRequestViewData)
         {

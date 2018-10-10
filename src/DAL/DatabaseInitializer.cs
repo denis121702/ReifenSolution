@@ -1,29 +1,18 @@
-﻿// ====================================================
-// More Templates: https://www.ebenmonney.com/templates
-// Email: support@ebenmonney.com
-// ====================================================
-
-using DAL.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.Core;
-using DAL.Core.Interfaces;
-
-namespace DAL
+﻿namespace DAL
 {
+    using DAL.Models;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using DAL.Core;
+    using DAL.Core.Interfaces;
+
     public interface IDatabaseInitializer
     {
         Task SeedAsync();
     }
-
-
-
 
     public class DatabaseInitializer : IDatabaseInitializer
     {
@@ -60,59 +49,95 @@ namespace DAL
 
 
 
-            if (!await _context.Customers.AnyAsync() && !await _context.ProductCategories.AnyAsync())
+            if (!await _context.Customers.AnyAsync()) // && !await _context.ProductCategories.AnyAsync())
             {
                 _logger.LogInformation("Seeding initial data");
 
-                Customer cust_1 = new Customer
+                var cust_1 = new Customer
                 {
-                    Name = "Ebenezer Monney",
-                    Email = "contact@ebenmonney.com",
+                    Name = "Monney",
+                    Vorname = "Ebenezer",
+                    Street = "Street str.",
+                    Hausnummer = "123",
+                    PLZ = "54365",
+                    Ort = "Leverkusen",
+                    Telefon = "0179 299 9981",
+                    Email = "info@allreifen.de",
+                    Automodell = "MB C-Kl. 200d",
+                    Kennzeichen = "K-AJ 7777",
+                    Lagerplatz = "F18",
+                    Sommer = false,
+                    Winter = true,
+                    Reifensize = "205 55 R16 91V",
+                    Reifenmarke = "Hankook Cept Evo 2",
+                    Profiltiefe = "1xkaputt, 3xdurch",
+                    Dot = "3215",
+                    Felgeninfo = "Orig. 5x112, 66,6,",
+                    Schraubensize = "12x 1,5mm",
+                    Damagestate = "Gebraucht",
+                    Notizenempfehlungen = "Felgenreparatur, Neu Reifen kaufen.",
+                    History = "Kunde seit 20.07.2017, Ersteinlagerung 20.07.2018 Sommer, W-einl. 01.11.2018, Sommereinlg. 01.04.2018.",
                     Gender = Gender.Male,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
+                    CreatedDate = DateTime.UtcNow,
+                    UpdatedDate = DateTime.UtcNow
                 };
-
-                Customer cust_2 = new Customer
+                var cust_2 = new Customer
                 {
-                    Name = "Itachi Uchiha",
-                    Email = "uchiha@narutoverse.com",
-                    PhoneNumber = "+81123456789",
-                    Address = "Some fictional Address, Street 123, Konoha",
-                    City = "Konoha",
+                    Name = "Itachi",
+                    Vorname = "Uchiha",
+                    Street = "Montanusstr.",
+                    Hausnummer = "123",
+                    PLZ = "44666",
+                    Ort = "Köln",
+                    Telefon = "0179 299 9981",
+                    Email = "info@allreifen.de",
+                    Automodell = "MB C-Kl. 200d",
+                    Kennzeichen = "K-AJ 7777",
+                    Lagerplatz = "B18",
+                    Sommer = false,
+                    Winter = true,
+                    Reifensize = "205 55 R16 91V",
+                    Reifenmarke = "Hankook Cept Evo 2",
+                    Profiltiefe = "1xkaputt, 3xdurch",
+                    Dot = "3215",
+                    Felgeninfo = "Orig. 5x112, 66,6,",
+                    Schraubensize = "12x 1,5mm",
+                    Damagestate = "Gebraucht",
+                    Notizenempfehlungen = "Felgenreparatur, Neu Reifen kaufen.",
+                    History = "Kunde seit 20.07.2017, Ersteinlagerung 20.07.2018 Sommer, W-einl. 01.11.2018, Sommereinlg. 01.04.2018.",
                     Gender = Gender.Male,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
+                    CreatedDate = DateTime.UtcNow,
+                    UpdatedDate = DateTime.UtcNow
                 };
-
-                Customer cust_3 = new Customer
+                var cust_3 = new Customer
                 {
-                    Name = "John Doe",
-                    Email = "johndoe@anonymous.com",
-                    PhoneNumber = "+18585858",
-                    Address = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
-                    Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet",
-                    City = "Lorem Ipsum",
+                    Name = "Doe",
+                    Vorname = "John ",
+                    Street = "Kndndnde.",
+                    Hausnummer = "123",
+                    PLZ = "44666",
+                    Ort = "Düsseldorf",
+                    Telefon = "0179 299 9981",
+                    Email = "info@allreifen.de",
+                    Automodell = "MB C-Kl. 200d",
+                    Kennzeichen = "K-AJ 7777",
+                    Lagerplatz = "A18",
+                    Sommer = false,
+                    Winter = true,
+                    Reifensize = "205 55 R16 91V",
+                    Reifenmarke = "Hankook Cept Evo 2",
+                    Profiltiefe = "1xkaputt, 3xdurch",
+                    Dot = "3215",
+                    Felgeninfo = "Orig. 5x112, 66,6,",
+                    Schraubensize = "12x 1,5mm",
+                    Damagestate = "Gebraucht",
+                    Notizenempfehlungen = "Felgenreparatur, Neu Reifen kaufen.",
+                    History = "Kunde seit 20.07.2017, Ersteinlagerung 20.07.2018 Sommer, W-einl. 01.11.2018, Sommereinlg. 01.04.2018.",
                     Gender = Gender.Male,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
+                    CreatedDate = DateTime.UtcNow,
+                    UpdatedDate = DateTime.UtcNow
                 };
-
-                Customer cust_4 = new Customer
-                {
-                    Name = "Jane Doe",
-                    Email = "Janedoe@anonymous.com",
-                    PhoneNumber = "+18585858",
-                    Address = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
-                    Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet",
-                    City = "Lorem Ipsum",
-                    Gender = Gender.Male,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
-
-
-
+              
                 ProductCategory prodCat_1 = new ProductCategory
                 {
                     Name = "None",
@@ -120,8 +145,6 @@ namespace DAL
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
                 };
-
-
 
                 Product prod_1 = new Product
                 {
@@ -135,7 +158,6 @@ namespace DAL
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
                 };
-
                 Product prod_2 = new Product
                 {
                     Name = "Nissan Patrol",
@@ -148,7 +170,6 @@ namespace DAL
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
                 };
-
 
 
                 Order ordr_1 = new Order
@@ -164,7 +185,6 @@ namespace DAL
                         new OrderDetail() {UnitPrice = prod_2.SellingPrice, Quantity=1, Product = prod_2 },
                     }
                 };
-
                 Order ordr_2 = new Order
                 {
                     Cashier = await _context.Users.FirstAsync(),
@@ -180,8 +200,7 @@ namespace DAL
 
                 _context.Customers.Add(cust_1);
                 _context.Customers.Add(cust_2);
-                _context.Customers.Add(cust_3);
-                _context.Customers.Add(cust_4);
+                _context.Customers.Add(cust_3);                
 
                 _context.Products.Add(prod_1);
                 _context.Products.Add(prod_2);
@@ -194,8 +213,6 @@ namespace DAL
                 _logger.LogInformation("Seeding initial data completed");
             }
         }
-
-
 
         private async Task EnsureRoleAsync(string roleName, string description, string[] claims)
         {

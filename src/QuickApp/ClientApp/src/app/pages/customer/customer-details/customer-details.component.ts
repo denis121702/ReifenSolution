@@ -1,9 +1,11 @@
 import { Component, OnInit} from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import {User} from '../../../models/user.model';
-import {AccountService} from '../../../services/account.service';
+import {MatSnackBar} from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
+
 import {AlertService, MessageSeverity} from '../../../services/alert.service';
 import {Utilities} from '../../../services/utilities';
+import {ICustomer} from '../../../models/customer';
+import {CustomerService} from '../../../services/customer.service';
 
 @Component({
   selector: 'app-customer-details',
@@ -15,11 +17,14 @@ export class CustomerDetailsComponent implements OnInit {
 
   errorMessage: string;
   id: string;
-  dataView: User = new User();
+  edit = false;
+  dataView: ICustomer;
+  oldData: any;
 
   constructor(private route: ActivatedRoute,
-              private accountService: AccountService,
-              private alertService: AlertService) {
+              private customerService: CustomerService,
+              private alertService: AlertService,
+              public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -29,26 +34,56 @@ export class CustomerDetailsComponent implements OnInit {
 
   loadStyleMasterList(id: string) {
     this.alertService.startLoadingMessage();
-    this.accountService.getUser(id).subscribe(
-        user => this.onCurrentUserDataLoadSuccessful(user),
-        error => this.onCurrentUserDataLoadFailed(error)
+    this.customerService.getCustomerById(id).subscribe(
+      customer => this.onCurrentUserDataLoadSuccessful(customer),
+      error => this.onCurrentUserDataLoadFailed(error)
     );
-  /*  this.logService.getLogById(id).subscribe((log: ILog) => {
-            this.dataView = Object.assign({}, log);
-        },
-        error => this.errorMessage = <any>error
-      );*/
   }
 
-  private onCurrentUserDataLoadSuccessful(user: User) {
+  onCurrentUserDataLoadSuccessful(customer: ICustomer) {
     this.alertService.stopLoadingMessage();
-    this.dataView = user;
+    this.dataView = customer;
+    this.oldData = Object.assign({}, customer);
   }
 
-  private onCurrentUserDataLoadFailed(error: any) {
+  onCurrentUserDataLoadFailed(error: any) {
     this.alertService.stopLoadingMessage();
     this.alertService.showStickyMessage('Load Error',
       `Unable to retrieve user data from the server.\r\nErrors: "${Utilities.getHttpResponseMessage(error)}"`,
       MessageSeverity.error, error);
+  }
+
+  saveEntry() {
+    this.alertService.startLoadingMessage('Saving changes...');
+    this.customerService.saveCustomer(this.dataView).subscribe(
+      response => this.onSaveComplete(response),
+      error => this.saveFailedHelper(error)
+    );
+  }
+
+  private onSaveComplete(response: any) {
+    this.edit = false;
+    this.snackBar.open('Changes have been saved ', 'Customer',{ duration: 2000 });
+    this.alertService.stopLoadingMessage();
+    if (response) {
+      this.alertService.showMessage('Success', `User \"${this.dataView.name}\" was created successfully`, MessageSeverity.success);
+    } else {
+      this.alertService.showStickyMessage('Save Error', 'The below errors occured whilst saving your changes:', MessageSeverity.error);
+    }
+  }
+
+  private saveFailedHelper(error: any) {
+    this.alertService.stopLoadingMessage();
+    this.alertService.showStickyMessage('Save Error', 'The below errors occured whilst saving your changes:', MessageSeverity.error, error);
+    this.alertService.showStickyMessage(error, null, MessageSeverity.error);
+  }
+
+  editEntry() {
+    this.edit = true;
+  }
+
+  cancelEntry() {
+    this.dataView = Object.assign({}, this.oldData);
+    this.edit = false;
   }
 }

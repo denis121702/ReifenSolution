@@ -370,13 +370,8 @@ namespace QuickApp.Controllers
             if (!result.Item1)
                 throw new Exception("The following errors occurred whilst updating User Configurations: " + string.Join(", ", result.Item2));
 
-
             return NoContent();
         }
-
-
-
-
 
         [HttpGet("roles/{id}", Name = GetRoleByIdActionName)]
         [ProducesResponseType(200, Type = typeof(RoleViewModel))]

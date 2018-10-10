@@ -34,11 +34,6 @@ export class UserDetailsComponent implements OnInit {
         user => this.onCurrentUserDataLoadSuccessful(user),
         error => this.onCurrentUserDataLoadFailed(error)
     );
-  /*  this.logService.getLogById(id).subscribe((log: ILog) => {
-            this.dataView = Object.assign({}, log);
-        },
-        error => this.errorMessage = <any>error
-      );*/
   }
 
   private onCurrentUserDataLoadSuccessful(user: User) {

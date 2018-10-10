@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace QuickApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181009111726_AddProductReviews2")]
+    partial class AddProductReviews2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,28 +128,25 @@ namespace QuickApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Automodell")
-                        .HasMaxLength(100);
-
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("Damagestate")
+                    b.Property<string>("DOT")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("DamageState")
                         .HasMaxLength(100);
 
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<DateTime>("DateModified");
 
-                    b.Property<string>("Dot")
-                        .HasMaxLength(100);
-
                     b.Property<string>("Email")
                         .HasMaxLength(100);
 
-                    b.Property<string>("Felgeninfo");
+                    b.Property<string>("FelgenInfo");
 
                     b.Property<int>("Gender");
 
@@ -163,11 +162,14 @@ namespace QuickApp.Migrations
                     b.Property<string>("Lagerplatz")
                         .HasMaxLength(10);
 
+                    b.Property<string>("MarkeModel")
+                        .HasMaxLength(100);
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<string>("Notizenempfehlungen");
+                    b.Property<string>("NotizenEmpfehlungen");
 
                     b.Property<string>("Ort")
                         .HasMaxLength(50);
@@ -175,26 +177,26 @@ namespace QuickApp.Migrations
                     b.Property<string>("PLZ")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Profiltiefe")
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(30)
+                        .IsUnicode(false);
+
+                    b.Property<string>("ProfilTiefe")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("ReifenSize")
                         .HasMaxLength(100);
 
                     b.Property<string>("Reifenmarke")
                         .HasMaxLength(100);
 
-                    b.Property<string>("Reifensize")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Schraubensize")
+                    b.Property<string>("SchraubenSize")
                         .HasMaxLength(100);
 
                     b.Property<bool>("Sommer");
 
                     b.Property<string>("Street")
                         .HasMaxLength(50);
-
-                    b.Property<string>("Telefon")
-                        .HasMaxLength(30)
-                        .IsUnicode(false);
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
@@ -605,7 +607,7 @@ namespace QuickApp.Migrations
                         .HasForeignKey("CashierId");
 
                     b.HasOne("DAL.Models.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

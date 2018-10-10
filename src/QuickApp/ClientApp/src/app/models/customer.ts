@@ -1,17 +1,26 @@
-/* Defines the customer entity */
-export interface ICustomer {
-    id: string;
-    Name: string;
-    Email: string;
-    PhoneNumber: string;
-    anrede: string;
+import {IAuditableEntity} from './common/auditable';
+
+export interface ICustomer extends IAuditableEntity {
+    name: string;
     vorname: string;
-    nachname: string;
+    street: string;
+    hausnummer: string;
+    plz: string;
+    ort: string;
+    telefon: string;
     email: string;
-    status: string;
-    rating: string;
-    unsubscribeStatus: number;
-    sendMailStatus: boolean;
-    token: string;
-    isMainQuestionAnswered: boolean;
+    automodell: string;
+    kennzeichen: string;
+    lagerplatz: string;
+    sommer: boolean;
+    winter: boolean;
+    reifensize: string;
+    reifenmarke: string;
+    profiltiefe: string;
+    dot: string;
+    felgeninfo: string;
+    schraubensize: string;
+    damagestate: string;
+    notizenempfehlungen: string;
+    history: string;
 }

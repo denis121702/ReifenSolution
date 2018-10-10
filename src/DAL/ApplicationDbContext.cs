@@ -1,21 +1,14 @@
-﻿// ====================================================
-// More Templates: https://www.ebenmonney.com/templates
-// Email: support@ebenmonney.com
-// ====================================================
-
-using DAL.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using DAL.Models.Interfaces;
-
-namespace DAL
+﻿namespace DAL
 {
+    using DAL.Models;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Threading;
+    using DAL.Models.Interfaces;
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public string CurrentUserId { get; set; }
@@ -24,8 +17,6 @@ namespace DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-
-
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         { }
@@ -43,9 +34,22 @@ namespace DAL
 
             builder.Entity<Customer>().Property(c => c.Name).IsRequired().HasMaxLength(100);
             builder.Entity<Customer>().HasIndex(c => c.Name);
+            builder.Entity<Customer>().Property(c => c.Vorname).HasMaxLength(100);
+            builder.Entity<Customer>().Property(c => c.Street).HasMaxLength(50);
+            builder.Entity<Customer>().Property(c => c.Hausnummer).IsUnicode(false).HasMaxLength(30);
+            builder.Entity<Customer>().Property(c => c.PLZ).HasMaxLength(50);
+            builder.Entity<Customer>().Property(c => c.Ort).HasMaxLength(50);
+            builder.Entity<Customer>().Property(c => c.Telefon).IsUnicode(false).HasMaxLength(30);
             builder.Entity<Customer>().Property(c => c.Email).HasMaxLength(100);
-            builder.Entity<Customer>().Property(c => c.PhoneNumber).IsUnicode(false).HasMaxLength(30);
-            builder.Entity<Customer>().Property(c => c.City).HasMaxLength(50);
+            builder.Entity<Customer>().Property(c => c.Automodell).HasMaxLength(100);
+            builder.Entity<Customer>().Property(c => c.Kennzeichen).HasMaxLength(100);
+            builder.Entity<Customer>().Property(c => c.Lagerplatz).HasMaxLength(10);
+            builder.Entity<Customer>().Property(c => c.Reifensize).HasMaxLength(100);
+            builder.Entity<Customer>().Property(c => c.Reifenmarke).HasMaxLength(100);
+            builder.Entity<Customer>().Property(c => c.Profiltiefe).HasMaxLength(100);
+            builder.Entity<Customer>().Property(c => c.Dot).HasMaxLength(100);
+            builder.Entity<Customer>().Property(c => c.Schraubensize).HasMaxLength(100);
+            builder.Entity<Customer>().Property(c => c.Damagestate).HasMaxLength(100);            
             builder.Entity<Customer>().ToTable($"App{nameof(this.Customers)}");
 
             builder.Entity<ProductCategory>().Property(p => p.Name).IsRequired().HasMaxLength(100);
@@ -65,15 +69,11 @@ namespace DAL
             builder.Entity<OrderDetail>().ToTable($"App{nameof(this.OrderDetails)}");
         }
 
-
-
-
         public override int SaveChanges()
         {
             UpdateAuditEntities();
             return base.SaveChanges();
         }
-
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
@@ -81,13 +81,11 @@ namespace DAL
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             UpdateAuditEntities();
             return base.SaveChangesAsync(cancellationToken);
         }
-
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
         {

@@ -3,6 +3,10 @@
   <span class="example-fill-remaining-space"></span>
   <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
   <div class="button-row tool-button-spacer">
+    <button mat-mini-fab class="tool-button" [routerLink]="['details/', '']" matTooltip="Add">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="tool-button-spacer"></div>
     <button mat-icon-button class="tool-button" (click)="load()" matTooltip="Refresh">
       <mat-icon>refresh</mat-icon>
     </button>
@@ -59,47 +63,46 @@
     </mat-form-field>
   </div>
 
-
   <mat-table #table [dataSource]="dataSource" matSort>
     <!-- ID Column -->
-    <ng-container matColumnDef="customerId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Customer-ID* </mat-header-cell>
-      <mat-cell *matCellDef="let row"> <a class="link" [routerLink]="'details/' + row.id">{{row.id }}</a> </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="contactId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Contact-ID* </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.contactId}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="firmenname">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Company* </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.firmenname }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="anrede">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Salutation </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.anrede}} </mat-cell>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> <a class="link" [routerLink]="'details/' + row.id">{{row.name}}</a> </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="vorname">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> First name* </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.vorname}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Vorname </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.vorname }} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="nachname">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Last name* </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.nachname}} </mat-cell>
+    <ng-container matColumnDef="telefon">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Telefon </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.telefon}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="email">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Email* </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="sendMailStatus">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Written to </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.sendMailStatus ? 'yes' : 'no'}} </mat-cell>
+    <ng-container matColumnDef="lagerplatz">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Lagerplatz </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.lagerplatz}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="reifensize">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Reifengröße </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.reifensize}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="reifenmarke">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Reifenmarke </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.reifenmarke}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="profiltiefe">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Profiltiefe </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.profiltiefe}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">
@@ -109,7 +112,11 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="openDeleteDialog(row._id)">
+          <button mat-menu-item [routerLink]="'details/' + row.id">
+            <mat-icon>mode_edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="openDeleteDialog(row.id)">
             <mat-icon>delete</mat-icon>
             <span>Delete</span>
           </button>

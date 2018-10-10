@@ -10,7 +10,6 @@ import {PageRequest} from '../../../models/common/page-request';
 import {DialogMessage} from '../../../shared/dialogs/confirm-dialog/dialog-message';
 import {ConfirmDialogComponent} from '../../../shared/dialogs/confirm-dialog/confirm-dialog.component';
 import {AuthGuard} from '../../../services/auth-guard.service';
-import {PageResponse} from '../../../models/common/page-response';
 
 @Component({
   selector: 'app-customer-list',
@@ -25,14 +24,14 @@ export class CustomerListComponent implements OnInit {
 
   displayedColumns = [
     'actions',
-    'customerId',
-    'contactId',
-    'firmenname',
-    'anrede',
+    'name',
     'vorname',
-    'nachname',
+    'telefon',
     'email',
-    'sendMailStatus'
+    'lagerplatz',
+    'reifensize',
+    'reifenmarke',
+    'profiltiefe'
   ];
 
   dataSource: TableDataSource | null;
@@ -83,7 +82,7 @@ export class CustomerListComponent implements OnInit {
     this.dataSource = new TableDataSource(this.resourceSelector);
   }
 
-  openDeleteDialog(_id: string): void {
+  openDeleteDialog(id: string): void {
     const msg: DialogMessage = {
       title: 'Delete customer',
       message: 'The customer will be deleted?',
