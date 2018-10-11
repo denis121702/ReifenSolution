@@ -61,6 +61,13 @@
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-select placeholder="Lagerplatz" multiple>
+        <mat-option *ngFor="let lagerplatz of lagerplatzCodeList$ | async" [value]="lagerplatz.id">{{lagerplatz.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
   </div>
 
   <mat-table #table [dataSource]="dataSource" matSort>

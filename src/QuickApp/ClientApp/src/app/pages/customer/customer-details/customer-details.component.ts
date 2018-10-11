@@ -17,8 +17,8 @@ export class CustomerDetailsComponent implements OnInit {
 
   errorMessage: string;
   id: string;
-  edit = false;
-  dataView: ICustomer;
+  edit = true;
+  dataView: ICustomer = {} as ICustomer;
   oldData: any;
 
   constructor(private route: ActivatedRoute,
@@ -61,7 +61,7 @@ export class CustomerDetailsComponent implements OnInit {
     );
   }
 
-  private onSaveComplete(response: any) {
+  onSaveComplete(response: any) {
     this.edit = false;
     this.snackBar.open('Changes have been saved ', 'Customer',{ duration: 2000 });
     this.alertService.stopLoadingMessage();
@@ -72,18 +72,22 @@ export class CustomerDetailsComponent implements OnInit {
     }
   }
 
-  private saveFailedHelper(error: any) {
+  saveFailedHelper(error: any) {
     this.alertService.stopLoadingMessage();
     this.alertService.showStickyMessage('Save Error', 'The below errors occured whilst saving your changes:', MessageSeverity.error, error);
     this.alertService.showStickyMessage(error, null, MessageSeverity.error);
   }
 
   editEntry() {
-    this.edit = true;
+    this.edit = false;
   }
 
   cancelEntry() {
     this.dataView = Object.assign({}, this.oldData);
-    this.edit = false;
+    this.edit = true;
+  }
+
+  downloadPdf() {
+
   }
 }

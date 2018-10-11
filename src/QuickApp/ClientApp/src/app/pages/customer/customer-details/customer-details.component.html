@@ -3,7 +3,7 @@
   <span class="example-fill-remaining-space"></span>
   <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
   <div class="button-row tool-button-spacer">
-    <button mat-icon-button class="tool-button" *ngIf="!edit"(click)="editEntry();" matTooltip="Edit">
+    <button mat-icon-button class="tool-button" *ngIf="edit"(click)="editEntry();" matTooltip="Edit">
       <mat-icon >mode_edit</mat-icon>
     </button>
     <div class="tool-button-spacer"></div>
@@ -20,7 +20,7 @@
         <mat-card-title><h2>Details</h2></mat-card-title>
       </mat-card-header>
       <mat-card-content>
-          <mat-form-field>
+         <mat-form-field>
             <input matInput placeholder="id" [(ngModel)]="dataView.id" name="id" [disabled]='true' >
           </mat-form-field>
          <mat-form-field>
@@ -33,27 +33,58 @@
             <input matInput placeholder="Email"  [(ngModel)]="dataView.email" name="email" [disabled]='edit' >
           </mat-form-field>
           <mat-form-field>
+            <input matInput placeholder="telefon" [(ngModel)]="dataView.telefon" name="telefon" [disabled]='edit' >
+          </mat-form-field>
+          <mat-form-field>
             <input matInput placeholder="Create date" value="{{dataView.createdDate | DateFormatPipe }}" name="dateCreated" length="50" [disabled]="true">
           </mat-form-field>
           <mat-form-field>
             <input matInput placeholder="Last changes at" value="{{dataView.updatedDate | DateFormatPipe }}" name="dateModified" length="50" [disabled]="true">
           </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Notizen/Empfehlungen"  [(ngModel)]="dataView.notizenempfehlungen" name="notizenempfehlungen" [disabled]='edit' >
+          <mat-form-field>
+            <input matInput placeholder="kennzeichen"  [(ngModel)]="dataView.kennzeichen" name="kennzeichen" [disabled]='edit' >
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="lagerplatz" [(ngModel)]="dataView.lagerplatz" name="lagerplatz" [disabled]='edit' >
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="reifensize"  [(ngModel)]="dataView.reifensize" name="reifensize" [disabled]='edit' >
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="reifenmarke" [(ngModel)]="dataView.reifenmarke" name="reifenmarke" [disabled]='edit' >
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="profiltiefe"  [(ngModel)]="dataView.profiltiefe" name="profiltiefe" [disabled]='edit' >
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="dot"  [(ngModel)]="dataView.dot" name="dot" [disabled]='edit' >
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="felgeninfo"  [(ngModel)]="dataView.felgeninfo" name="felgeninfo" [disabled]='edit' >
           </mat-form-field>
           <mat-form-field class="example-full-width">
-            <textarea matInput
-                      placeholder="History"
-                      [(ngModel)]="dataView.history"
-                      name="history"
-                      [disabled]='edit'
-                      matTextareaAutosize
-                      matAutosizeMinRows="20"
-                      matAutosizeMaxRows="30"></textarea>
+              <input matInput placeholder="Notizen/Empfehlungen"  [(ngModel)]="dataView.notizenempfehlungen" name="notizenempfehlungen" [disabled]='edit' >
           </mat-form-field>
+          <mat-form-field class="example-full-width">
+              <textarea matInput
+                        placeholder="History"
+                        [(ngModel)]="dataView.history"
+                        name="history"
+                        [disabled]='edit'
+                        matTextareaAutosize
+                        matAutosizeMinRows="20"
+                        matAutosizeMaxRows="30"></textarea>
+            </mat-form-field>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-raised-button  [disabled]="edit" (click)="cancelEntry();" matTooltip="Cancel Edit">
+        <button mat-raised-button [disabled]="edit" (click)="downloadPdf();" matTooltip="Einlagerungsbeleg">
+          Einlagerungsbeleg
+        </button>
+        <a href='assets/files/F18 V. Raaz.doc'>
+          Einlagerungsbeleg
+        </a>
+        <div class="tool-button-spacer"></div>
+        <button mat-raised-button [disabled]="edit" (click)="cancelEntry();" matTooltip="Cancel Edit">
           Cancel
         </button>
         <button mat-raised-button color="primary"

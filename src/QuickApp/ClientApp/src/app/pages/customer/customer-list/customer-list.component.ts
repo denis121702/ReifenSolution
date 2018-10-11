@@ -9,7 +9,7 @@ import {CustomerService} from '../../../services/customer.service';
 import {PageRequest} from '../../../models/common/page-request';
 import {DialogMessage} from '../../../shared/dialogs/confirm-dialog/dialog-message';
 import {ConfirmDialogComponent} from '../../../shared/dialogs/confirm-dialog/confirm-dialog.component';
-import {AuthGuard} from '../../../services/auth-guard.service';
+import {CodeList} from '../../../models/common/code-list';
 
 @Component({
   selector: 'app-customer-list',
@@ -44,10 +44,10 @@ export class CustomerListComponent implements OnInit {
   count = 0;
   resourceSelector: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   filterChange = new BehaviorSubject('');
+  lagerplatzCodeList$: Observable<CodeList[]>;
 
   constructor(public customerService: CustomerService,
               public dialog: MatDialog,
-              public authGuard: AuthGuard,
               public snackBar: MatSnackBar) {
   }
 
@@ -80,6 +80,13 @@ export class CustomerListComponent implements OnInit {
     }, error => this.errorMessage = <any>error);
 
     this.dataSource = new TableDataSource(this.resourceSelector);
+
+    this.loadCodeLists();
+  }
+
+  loadCodeLists(): void {
+    const sortActive = 'Lagerplatz';
+    this.lagerplatzCodeList$ = this.customerService.getCodeList(sortActive);
   }
 
   openDeleteDialog(id: string): void {

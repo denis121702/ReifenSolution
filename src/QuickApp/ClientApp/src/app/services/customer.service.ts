@@ -8,7 +8,7 @@ import {ConfigurationService} from './configuration.service';
 import {EndpointFactory} from './endpoint-factory.service';
 import {PageResponse} from '../models/common/page-response';
 import {ICustomer} from '../models/customer';
-import {IAuditableEntity} from '../models/common/auditable';
+import {CodeList} from '../models/common/code-list';
 
 @Injectable()
 export class CustomerService  extends EndpointFactory {
@@ -19,6 +19,15 @@ export class CustomerService  extends EndpointFactory {
 
   constructor(http: HttpClient, configurations: ConfigurationService, injector: Injector) {
     super(http, configurations, injector);
+  }
+
+  getCodeList(sortActive: string): Observable<CodeList[]> {
+    const endpointUrl = `${this.customerUrl}/codelist/${sortActive}`;
+
+    return this.http.get<any[]>(endpointUrl, this.getRequestHeaders()).pipe<CodeList[]>(
+      catchError(error => {
+        return this.handleError(error, () => this.getCodeList(sortActive));
+      }));
   }
 
   saveCustomer(customer: ICustomer) {

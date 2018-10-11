@@ -23,7 +23,24 @@
             _unitOfWork = unitOfWork;
             _logger = logger;
             _emailer = emailer;
-        }   
+        }
+
+        [HttpGet("codelist/{sortActive}")]        
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetCustomerCodeList(string sortActive)
+        {
+            _logger.LogInformation("Calling CustomerControlle: GetCustomerCodeList: " + sortActive);
+
+            var codeLists = _unitOfWork.Customers.GetCodeList(sortActive);
+
+            if (codeLists == null)
+            {
+                return NotFound(sortActive);
+            }
+
+            return Ok(await Task.FromResult(codeLists));
+        }
 
         [HttpPost]        
         [ProducesResponseType(201, Type = typeof(RoleViewModel))]
@@ -104,8 +121,6 @@
 
             return Ok(await Task.FromResult(customer));
         }
-
-
 
         [Route("search")]
         [ProducesResponseType(200, Type = typeof(PageResponseViewData))]

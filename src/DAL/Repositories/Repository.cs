@@ -18,7 +18,18 @@
             _context = context;
             _entities = context.Set<TEntity>();
         }
- 
+
+        public IEnumerable<Object> GetCodeList(string sortActive = "Id")
+        {
+            IQueryable<TEntity> query = _entities;
+
+            var groupLinst = query.GroupBy("new(" + sortActive + ")", "it")
+                .OrderBy("Key." + sortActive)
+                .Select("new(Key." + sortActive + " as id, Key." + sortActive + " as name)").ToDynamicList();
+
+            return groupLinst;
+        }
+
         public Tuple<IEnumerable<TEntity>, int> ListWithPaging(
             Expression<Func<TEntity, bool>>[] filterExpression,
             int? startIndex,
@@ -42,7 +53,7 @@
             {
                 query = query.Where(filter);
             }
-
+                        
             var count = query.Count();
 
             var sortExpression = sortActive + " " + sortDirection;

@@ -1,17 +1,9 @@
-﻿// ====================================================
-// More Templates: https://www.ebenmonney.com/templates
-// Email: support@ebenmonney.com
-// ====================================================
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DAL.Repositories.Interfaces
+﻿namespace DAL.Repositories.Interfaces
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+
     public interface IRepository<TEntity> where TEntity : class
     {
         void Add(TEntity entity);
@@ -29,6 +21,8 @@ namespace DAL.Repositories.Interfaces
         TEntity GetSingleOrDefault(Expression<Func<TEntity, bool>> predicate);
         TEntity Get(int id);
         IEnumerable<TEntity> GetAll();
+
+        IEnumerable<Object> GetCodeList(string sortActive = "Id");
     }
 
 }

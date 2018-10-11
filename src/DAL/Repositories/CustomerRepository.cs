@@ -42,6 +42,9 @@
 
         public PageResponse<Customer> GetCustomers(PageRequest pageRequest)
         {
+
+
+
             if(pageRequest == null)
             {
                 throw new ArgumentException("pageRequest");
@@ -51,8 +54,7 @@
 
             if (!string.IsNullOrWhiteSpace(pageRequest.filter))
             {
-                filterExpressions.Add(x => x.Name.Contains(pageRequest.filter));
-                filterExpressions.Add(x => x.Vorname.Contains(pageRequest.filter));
+                filterExpressions.Add(x => x.Name.Contains(pageRequest.filter) || x.Vorname.Contains(pageRequest.filter));                
             }
 
             var triple = this.ListWithPaging(filterExpressions.ToArray(), 

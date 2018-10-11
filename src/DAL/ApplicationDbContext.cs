@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using System.Threading;
     using DAL.Models.Interfaces;
+    using System.ComponentModel.DataAnnotations;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -72,7 +73,46 @@
         public override int SaveChanges()
         {
             UpdateAuditEntities();
+
+            var entities = from e in ChangeTracker.Entries()
+                           where e.State == EntityState.Added
+                               || e.State == EntityState.Modified
+                           select e.Entity;
+            foreach (var entity in entities)
+            {
+                var validationContext = new ValidationContext(entity);
+                Validator.ValidateObject(entity, validationContext);
+            }
+
+            //var validationErrors = ChangeTracker
+            //   .Entries<IValidatableObject>()
+            //   .SelectMany(e => e.Entity.Validate(null))
+            //   .Where(r => r != ValidationResult.Success);
+
+            //if (validationErrors.Any())
+            //{
+            //    // Possibly throw an exception here
+            //}
+
+            //try
+            //{
             return base.SaveChanges();
+            //}
+            //catch (DbEntityValidationException dbEx)
+            //{
+            //    // Iterate over the errors and write the trace information to make it a little easier to debug
+            //    // We coudl also wrap this up with our RuleException for any modeldb issues that we don't catch with our 
+            //    // domain rules.
+            //    foreach (var validationErrors in dbEx.EntityValidationErrors)
+            //    {
+            //        foreach (var validationError in validationErrors.ValidationErrors)
+            //        {
+            //            Trace.TraceInformation("Property: {0}, Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+            //        }
+            //    }
+
+            //    throw;
+            //}
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
